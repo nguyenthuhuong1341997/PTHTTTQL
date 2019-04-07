@@ -1,0 +1,16 @@
+.form-control {
+	border-radius: 5px;
+}
+
+.createuser{
+	margin-top: 30px;
+}
+
+.createuser .row{
+	margin: 10px;
+}
+
+.calendar-table .table-condensed{
+	width: 100%;
+}
+

@@ -1,0 +1,18 @@
+.list-book .quantity {
+	float: left;
+}
+
+.list-book .quantityBook {
+	float: left;
+	width: 20%;
+    text-align: center;
+}
+
+.list-book .border-quantity {
+	border: 1px solid black;
+	height: 40px;
+}
+
+.list-book .quantityBook p,b {
+	margin: 10px 0px;
+}
