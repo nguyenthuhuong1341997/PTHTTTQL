@@ -1,5 +1,5 @@
-<?php 
-	include_once 'views/layout/admin/header.php';
+<?php
+include_once 'views/layout/admin/header.php';
 ?>
  <div class="right_col list-book" role="main">
           <div class="">
@@ -45,17 +45,16 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                  	<?php  if ($_SESSION['user']['role_id'] == 1): ?>
+                  	<?php if ($_SESSION['user']['rcode'] == 'ROLE_BOSS'): ?>
 	                  	<div class="row">
 	                  		<div class="col-md-6">
 	                  			<a href="?mod=admin&act=book&action=create" class="btn btn-success"><i class="fa fa-plus-circle"></i>Thêm mới</a>
 	                  		</div>
 	                  	</div>
-                  	<?php endif ?>
+                  	<?php endif?>
                     <table id="datatable" class="table table-striped table-bordered">
                       <thead>
                         <tr>
-                        	<th><input type="checkbox" onclick="toggle(this);" /></th>
                           	<th>ID</th>
                           	<th>Tên sách</th>
 					        <th>Ảnh</th>
@@ -68,111 +67,108 @@
 
 
                       <tbody>
-                        <?php foreach ($books as $key => $value) { ?>
-			    		
-			      		
+                        <?php foreach ($books as $key => $value) {?>
+
+
 					    		<tr id="<?php echo $value['id']; ?>">
-					    		<td><input class="checkbox-working-day" value="<?=$value['id']  ?>" type="checkbox" /></td>
-				    			<td><?=$value['id']  ?></td>
-				    			<td><?=$value['name']  ?></td>
-						        <td><div style="background-image: url(<?=$value['image']  ?>); width: 100px; height: 100px; background-repeat: no-repeat; background-position: center; background-size: cover;"></div></td>
-						        <td><?=$value['author_name']  ?></td>
-						        <td><?=$value['type']  ?></td>
-						        <td><?=$value['publisher_name']  ?></td>
+				    			<td><?=$value['id']?></td>
+				    			<td><?=$value['name']?></td>
+						        <td><div style="background-image: url(<?=$value['image']?>); width: 100px; height: 100px; background-repeat: no-repeat; background-position: center; background-size: cover;"></div></td>
+						        <td><?=$value['author_name']?></td>
+						        <td><?=$value['type_name']?></td>
+						        <td><?=$value['publisher_name']?></td>
 						        <td>
-									<a data-target="#myModal-<?=$value['id']?>" class="btn btn-info" title="Xem chi tiết sản phẩm" data-toggle="modal" ><i class="fa fa-eye"></i></a>
-									<?php if ($_SESSION['user']['role_id'] == 1): ?>
-										<a href="?mod=admin&act=edit&id=<?= $value['id']?>" class="btn btn-warning" title="Sửa thông tin sản phẩm"><i class="fa fa-edit"></i></a>
-									<?php endif ?>
-									<?php  if ($_SESSION['user']['role_id'] == 2): ?>
-										<a href="?mod=admin&act=book&action=bookAddQuantity&id=<?= $value['id']?>" type="button" class="btn btn-info btn-edit-quantity-book" title="Thêm số lượng sản phẩm" data-id="<?= $value['id']?>"><i class="fa fa-edit"></i></a>
-									<?php endif ?>
-									<a href="javascript:;" class="btn btn-danger delete" title="Xóa sản phẩm"><i class="fa fa-trash-o"></i></a>
+									<a href="javascript:void(0)" slug-code="<?=$value['code']?>" class="open-detail btn btn-info" title="Xem chi tiết sản phẩm"><i class="fa fa-eye"></i></a>
+									<?php if ($_SESSION['user']['rcode'] == 'ROLE_BOSS'): ?>
+										<a href="?mod=admin&act=book&action=edit&code=<?=$value['code']?>" class="btn btn-warning" title="Sửa thông tin sản phẩm"><i class="fa fa-edit"></i></a>
+									<?php endif?>
+									<?php if ($_SESSION['user']['rcode'] == 'ROLE_ADMIN'): ?>
+										<a href="?mod=admin&act=book&action=bookAddQuantity&code=<?=$value['code']?>" type="button" class="btn btn-info btn-edit-quantity-book" title="Thêm số lượng sản phẩm" data-id="<?=$value['id']?>"><i class="fa fa-edit"></i></a>
+									<?php endif?>
+									<?php if ($_SESSION['user']['rcode'] == 'ROLE_BOSS'): ?>
+										<a href="javascript:;" slug-code="<?=$value['code']?>" class="btn btn-danger delete-book" title="Xóa sản phẩm"><i class="fa fa-trash-o"></i></a>
+									<?php endif?>
+
 						        </td>
 					      	</tr>
-			      		
-				      		<div id="myModal-<?=$value['id']?>" class="modal fade" role="dialog">
-								<div class="modal-dialog modal-lg">
-									<!-- Modal content-->
-									<div class="modal-content">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal">&times;</button>
-											<h4 class="modal-title">Thông tin sách</h4>
-										</div>
-										<div class="modal-body">
-											<div class="col-md-3">
-												<img src="<?php echo $value['image'] ?>" alt="" style="width: 235px; height: 300px;">
-											</div>
-											<div class="col-md-8 col-md-offset-1">
-												<div class="row">
-													<div class="col-md-3"><b>Mã sách</b></div>
-													<div class="col-md-9"><p><?=$value['code']?></p></div>
-												</div>
-												<div class="row">
-													<div class="col-md-3"><b>Tên sách</b></div>
-													<div class="col-md-9"><p><?=$value['name']?></p></div>
-												</div>
-												<div class="row">
-													<div class="col-md-3"><b>Giá bán</b></div>
-													<div class="col-md-9"><p><?=$value['price']?></p></div>
-												</div>
-												<div class="row">
-													<div class="col-md-3"><b>Thể loại</b></div>
-													<div class="col-md-9"><p><?=$value['type']?></p></div>
-												</div>
-												<div class="row">
-													<div class="col-md-3"><b>Tác giả</b></div>
-													<div class="col-md-9"><p><?=$value['author_name']?></p></div>
-												</div>
-												<div class="row">
-													<div class="col-md-3"><b>Nhà xuất bản</b></div>
-													<div class="col-md-9"><p><?=$value['publisher_name']?></p></div>
-												</div>	
-												<div class="row">
-													<div class="col-md-3"><b>Description</b></div>
-													<div class="col-md-9"><p><?=$value['description']?></p></div>
-												</div>					
-											</div>
-											<center><div class="row" style="padding-left: 15%">
-													<div class="quantityBook">
-														<div class="border-quantity">
-															<p><b>Vị trí</b></p>
-														</div>
-														<div class="border-quantity">
-															<p style="font-weight: 700;">Số lượng</p>
-														</div>
-													</div>
-													<?php foreach ($sites as $key1 => $value1) {?>
-														<div class="quantity quantityBook">
-															<div class="border-quantity">
-																<p><b><?= $value1['name'] ?></b></p>
-															</div>
-															<div class="border-quantity">
-																<?php foreach ($value['quantity'] as $keyQuantity => $quantity) {?>
-																	
-																	<?php if($key1 == $keyQuantity) { ?>
-																			<p><?= $quantity['quantity'] ?></p>
-																			<?php $count=1; ?>
-																	<?php } ?>
-																	
-																<?php } ?>
-															</div>
-														</div>
-															
-													<?php } ?>
-												</div>
-										</div></center>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-										</div>
-									</div>
-								</div>
-							</div>	
-																
-						<?php } ?>
+
+
+
+						<?php }?>
                       </tbody>
                     </table>
+					<div id="modal-detail" class="modal fade" role="dialog">
+						<div class="modal-dialog modal-lg">
+							<!-- Modal content-->
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h4 class="modal-title">Thông tin sách</h4>
+								</div>
+								<div class="modal-body" style="overflow: hidden;">
+									<div class="col-md-3">
+										<img src="" alt="" style="width: 235px; height: 300px;">
+									</div>
+									<div class="col-md-8 col-md-offset-1">
+										<div class="row">
+											<div class="col-md-3"><b>Mã sách</b></div>
+											<div class="col-md-9"><p slug="code"></p></div>
+										</div>
+										<div class="row">
+											<div class="col-md-3"><b>Tên sách</b></div>
+											<div class="col-md-9"><p slug="name"></p></div>
+										</div>
+										<div class="row">
+											<div class="col-md-3"><b>Giá bán</b></div>
+											<div class="col-md-9"><p slug="price"></p></div>
+										</div>
+										<div class="row">
+											<div class="col-md-3"><b>Thể loại</b></div>
+											<div class="col-md-9"><p slug="type"></p></div>
+										</div>
+										<div class="row">
+											<div class="col-md-3"><b>Tác giả</b></div>
+											<div class="col-md-9"><p slug="author_name"></p></div>
+										</div>
+										<div class="row">
+											<div class="col-md-3"><b>Nhà xuất bản</b></div>
+											<div class="col-md-9"><p slug="publisher_name"></p></div>
+										</div>
+										<div class="row">
+											<div class="col-md-3"><b>Description</b></div>
+											<div class="col-md-9"><p slug="description"></p></div>
+										</div>
+										<center>
+											<div class="row site_book" style="padding-left: 15%">
+												<div class="quantityBook">
+													<div class="border-quantity">
+														<p><b>Vị trí</b></p>
+													</div>
+													<div class="border-quantity">
+														<p style="font-weight: 700;">Số lượng</p>
+													</div>
+												</div>
+												<?php foreach ($sites as $s) {?>
+													<div class="quantityBook">
+														<div class="border-quantity">
+															<p><b><?=$s['location']?></b></p>
+														</div>
+														<div class="border-quantity">
+															<p slug="<?=$s['code']?>"></p>
+														</div>
+													</div>
+												<?php }?>
+											</div>
+										</center>
+									</div>
 
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+								</div>
+							</div>
+						</div>
+					</div>
                   </div>
                 </div>
               </div>
@@ -182,24 +178,25 @@
 <script type="text/javascript">
 	var bookqan = <?php echo json_encode($books) ?>
 </script>
-<?php 
-	include_once 'views/layout/admin/footer.php';
-	
+<?php
+include_once 'views/layout/admin/footer.php';
+
 ?>
 <script type="text/javascript" src="public/js/book.js"></script>
-<?php 
-	if (isset($_COOKIE['msg3'])) {
-		echo '<script type="text/javascript">toastr.success("Thêm mới thành công");toastr.options.timeOut = 30000;</script>';
-		// unset($_COOKIE['msg3']);
-	}
 
-	if (isset($_COOKIE['updateQuantityBookSuccess'])) {
-		echo '<script type="text/javascript">toastr.success("Thêm số lượng thành công");toastr.options.timeOut = 30000;</script>';
-		// unset($_COOKIE['msg3']);
-	}
+<?php
+if (isset($_COOKIE['msg3'])) {
+	echo '<script type="text/javascript">toastr.success("Thêm mới thành công");toastr.options.timeOut = 30000;</script>';
+	// unset($_COOKIE['msg3']);
+}
 
-	if (isset($_COOKIE['updateQuantityBookFail'])) {
-		echo '<script type="text/javascript">toastr.warning("Thêm số lượng không thành công");toastr.options.timeOut = 30000;</script>';
-		// unset($_COOKIE['msg3']);
-	}
+if (isset($_COOKIE['updateQuantityBookSuccess'])) {
+	echo '<script type="text/javascript">toastr.success("Thêm số lượng thành công");toastr.options.timeOut = 30000;</script>';
+	// unset($_COOKIE['msg3']);
+}
+
+if (isset($_COOKIE['updateQuantityBookFail'])) {
+	echo '<script type="text/javascript">toastr.warning("Thêm số lượng không thành công");toastr.options.timeOut = 30000;</script>';
+	// unset($_COOKIE['msg3']);
+}
 ?>

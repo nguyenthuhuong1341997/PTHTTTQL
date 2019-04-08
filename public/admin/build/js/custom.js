@@ -2521,7 +2521,9 @@ if (typeof NProgress != 'undefined') {
 				  };
 				}();
 
-				$('#datatable').dataTable();
+				$('#datatable').dataTable({
+				  'order': [[ 0, 'desc' ]]
+				});
 
 				$('#datatable-keytable').DataTable({
 				  keys: true
@@ -2544,7 +2546,7 @@ if (typeof NProgress != 'undefined') {
 				var $datatable = $('#datatable-checkbox');
 
 				$datatable.dataTable({
-				  'order': [[ 1, 'asc' ]],
+				  'order': [[ 1, 'desc' ]],
 				  'columnDefs': [
 					{ orderable: false, targets: [0] }
 				  ]

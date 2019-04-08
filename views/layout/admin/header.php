@@ -51,9 +51,9 @@
               </div>
               <div class="profile_info">
                 <span>Xin chào,</span>
-                <h2><?php 
-                    echo $_SESSION['user']['name'];
-                 ?></h2>
+                <h2 style="text-transform: capitalize;"><?php
+echo $_SESSION['user']['name'];
+?></h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -65,15 +65,27 @@
               <div class="menu_section">
                 <h3>Quản lý</h3>
                 <ul class="nav side-menu">
-                  <li><a href="?mod=admin&act=user"><i class="fa fa-users"></i> Quản lý nhân viên</a>
+                  <li <?php if (isset($_GET['act'])) {
+	if ($_GET['act'] == 'user') {echo 'class="active"';}
+}
+?> ><a href="?mod=admin&act=user"><i class="fa fa-users"></i> Quản lý nhân viên</a>
                   </li>
-                  <li><a href="?mod=admin&act=book"><i class="fa fa-book"></i> Quản lý sách <span class="fa fa-chevron-down"></span></a>
+                  <li <?php if (isset($_GET['act'])) {
+	if ($_GET['act'] == 'book') {echo 'class="active"';}
+}
+?>><a href="?mod=admin&act=book"><i class="fa fa-book"></i> Quản lý sách </a>
                   </li>
-                  <li><a href="?mod=admin&act=order"><i class="fa fa-truck"></i> Quản lý đơn hàng </a></li>
-                  <li><a href="?mod=admin&act=statistical"><i class="fa fa-line-chart"></i> Thống kê <span class="fa fa-chevron-down"></span></a></li>
+                  <li <?php if (isset($_GET['act'])) {
+	if ($_GET['act'] == 'order') {echo 'class="active"';}
+}
+?>><a href="?mod=admin&act=order"><i class="fa fa-truck"></i> Quản lý đơn hàng </a></li>
+                  <li <?php if (isset($_GET['act'])) {
+	if ($_GET['act'] == 'statistical') {echo 'class="active"';}
+}
+?>><a href="?mod=admin&act=statistical"><i class="fa fa-line-chart"></i> Thống kê </a></li>
                 </ul>
               </div>
-              
+
             </div>
             <!-- /sidebar menu -->
 
@@ -106,11 +118,11 @@
 
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
-                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                  <a style="text-transform: capitalize;" href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <img src="<?php echo $_SESSION['user']['image'] ?>" alt="">
-                    <?php 
-                        echo $_SESSION['user']['name'];
-                     ?>
+                    <?php
+echo $_SESSION['user']['name'];
+?>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">

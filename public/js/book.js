@@ -1,24 +1,56 @@
-// $('.btn-save-add-quantity').on('click', function() {
-// 	var book_id = $("input[name = quantityadd]").val();
-// 	var quantity = $("input[name = idaddquantity]").val();
+$(document).ready(function () {
+	$(document).on('click', '.open-detail', function(){
+		
+		var code = $(this).attr('slug-code');
+		$.ajax({
+			url : '?mod=admin&act=book&action=find-one&code=' + code,
+			type : 'get',
+			success : function(res){
+				if(res){
+					var data = JSON.parse(res);
+					$('#modal-detail img').attr('src', data.book['image']);
+					for (var key in data.book) {
+					    if (data.book.hasOwnProperty(key)) {
+					    	console.log(key);
+					    	$('#modal-detail p[slug='+key+']').html(data.book[key]);
+					    }
+					}
+					data.site_book.forEach(function(sb){
+						$('.site_book p[slug='+sb.code+']').text(sb.quantity);
+					})
+					$('#modal-detail').modal('show');
+				}
+			}
+		})
+	});
+	$(".delete-book").click(function(){
+		var code = $(this).attr("slug-code");
+		var path = "?mod=admin&act=book&action=delete&code=" + code;
+		swal({
+	        title: "Bạn có muốn xóa không?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+		.then((willDelete) => {
+		  	if (willDelete) {
+		  		 $.ajax({
+		            type: "get",
+		            url: path,
+		            success: function(res)
+		            {
+		            	var data = JSON.parse(res);
+		            	if(data === true) {
+		            		toastr.success('Xóa thành công.', 'Xog!')
+							setTimeout(function(){window.location.reload();}, 1000);
+						}else {
+							toastr.error('Xóa không thành công.', 'Lỗi!')
+							toastr.options.timeOut = 3000;
+						}
+		            }
 
-// 	$.ajax({
-// 		url : '?mod=admin&act=book&action=ajaxInforBookAddQuantity',
-// 		type: 'POST',
-// 		data: {
-// 			book_id: book_id,
-// 			quantity: quantity
-// 		},
-// 		success:function(response) {
-// 			var data = JSON.parse(response);
-//         	if(data.status == 'true') {
-//         		toastr.success('Thêm số lượng thành công.')
-// 				var url1 = '?mod=admin&act=book'; 
-// 				document.location = url1;
-// 			}else {
-// 				toastr.error('Thêm không thành công không thành công.', 'Lỗi!')
-// 				toastr.options.timeOut = 3000;
-// 			}
-// 		}
-// 	});
-// })
+	            });
+		  	}
+		});    	
+	});
+})

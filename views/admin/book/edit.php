@@ -16,12 +16,12 @@ include_once 'views/layout/admin/header.php';
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
 	                <div class="x_title" style="margin-top: 15px;">
-	                	<h2>Thêm mới sách</h2>
+	                	<h2>Sửa thông tin sách</h2>
 
 	                    <div class="clearfix"></div>
 
 	                </div>
-                  	<form enctype="multipart/form-data" method="POST" action="?mod=admin&act=book&action=store" class="form-horizontal form-label-left createuser" >
+                  	<form enctype="multipart/form-data" method="POST" action="?mod=admin&act=book&action=update" class="form-horizontal form-label-left createuser" >
                   		<div class="row">
                   			<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                   				<div class="row">
@@ -29,7 +29,7 @@ include_once 'views/layout/admin/header.php';
                   						<label>Mã sách</label>
                   					</div>
                   					<div class="col-md-9">
-                  						<input type="text" class="form-control has-feedback-left" placeholder="Code" name="code" id="code" autofocus="hidden" required="">
+                  						<input type="text" class="form-control has-feedback-left" placeholder="Code" name="code" id="code" readonly="" value="<?=$book['code'];?>">
 			                        	<span class="fa fa-envelope-o form-control-feedback left" aria-hidden="true"></span>
                   					</div>
                   				</div>
@@ -41,7 +41,7 @@ include_once 'views/layout/admin/header.php';
                               <label>Nhà xuất bản</label>
                             </div>
                             <div class="col-md-9">
-                              <select class="select2_single form-control" tabindex="-1" name="publisher">
+                              <select class="select2_single form-control"  value="<?=$book['publisher_id'];?>" tabindex="-1" name="publisher">
                                 <?php foreach ($publishers as $publisher): ?>
                                   <option value="<?=$publisher['id']?>"><?=$publisher['name']?></option>
                                 <?php endforeach?>
@@ -58,7 +58,7 @@ include_once 'views/layout/admin/header.php';
                               <label>Tên sách</label>
                             </div>
                             <div class="col-md-9">
-                              <input type="text" id="name" name="name" class="form-control has-feedback-left" placeholder="Tên sách" required="">
+                              <input type="text" id="name" name="name" class="form-control has-feedback-left" placeholder="Tên sách" required="" value="<?=$book['name'];?>">
                                 <span class="fa fa-key form-control-feedback left" aria-hidden="true"></span>
                             </div>
                   				</div>
@@ -69,7 +69,7 @@ include_once 'views/layout/admin/header.php';
                   						<label>Thể loại</label>
                   					</div>
                   					<div class="col-md-9">
-                  						<select class="select2_single form-control" tabindex="-1" name="type">
+                  						<select class="select2_single form-control" tabindex="-1" name="type" value="<?=$book['type_id'];?>">
                                 <?php foreach ($types as $type): ?>
                                   <option value="<?=$type['id']?>"><?=$type['name']?></option>
                                 <?php endforeach?>
@@ -86,7 +86,7 @@ include_once 'views/layout/admin/header.php';
                               <label>Giá</label>
                             </div>
                             <div class="col-md-9">
-                              <input type="text" id="price" class="form-control has-feedback-left" placeholder="Nhập vào giá bán" name="price" required="">
+                              <input type="number" id="price" class="form-control has-feedback-left" placeholder="Nhập vào giá bán" name="price" required="" value="<?=$book['price'];?>">
                                 <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
                             </div>
                   				</div>
@@ -97,7 +97,7 @@ include_once 'views/layout/admin/header.php';
                           </div>
 
                           <div class="col-md-9">
-                            <select class="select2_single form-control" tabindex="-1" name="author">
+                            <select class="select2_single form-control" tabindex="-1" name="author" value="<?=$book['author_id'];?>">
                               <?php foreach ($authors as $author): ?>
                                 <option value="<?=$author['id']?>"><?=$author['name']?></option>
                               <?php endforeach?>
@@ -113,7 +113,7 @@ include_once 'views/layout/admin/header.php';
                               <label>Mô tả</label>
                             </div>
                             <div class="col-md-10">
-                              <textarea id="editor" rows="6" cols="6" name="description"></textarea>
+                              <textarea id="editor" rows="6" cols="6" name="description"> <?=$book['description'];?></textarea>
                               <script>
                                   ClassicEditor
                                           .create( document.querySelector( '#editor' ) )
@@ -133,8 +133,7 @@ include_once 'views/layout/admin/header.php';
                               <label>Ảnh</label>
                             </div>
                             <div class="col-md-10">
-                              <input type="file" class="form-control has-feedback-left" placeholder="" name="image" id="image" >
-                                <span class="fa fa-graduation-cap form-control-feedback left" aria-hidden="true"></span>
+                              <input type="file" class="form-control has-feedback-left" placeholder="" name="image" value="" id="image" >
                             </div>
                           </div>
                         </div>
@@ -147,8 +146,11 @@ include_once 'views/layout/admin/header.php';
 
 
                   		<div class="row">
-                  			<div class="col-md-2 col-md-offset-5">
-								<button type="submit" class="btn btn-info ">Thêm mới</button>
+                        <div class="col-md-2 col-md-offset-4">
+                          <button type="button" onclick="location.href='?mod=admin&act=book'" class="btn btn-info ">Quay lại</button>
+                        </div>
+                  			<div class="col-md-2">
+								          <button type="submit" class="btn btn-info ">Lưu</button>
                   			</div>
                   		</div>
                   	</form>
@@ -168,9 +170,3 @@ include_once 'views/layout/admin/footer.php';
         format: 'DD.MM.YYYY'
     });
 </script>
-<?php
-if (isset($_COOKIE['code_exits'])) {
-	echo '<script type="text/javascript">toastr.error("Mã sách đã tồn tại!");toastr.options.timeOut = 30000;</script>';
-	// unset($_COOKIE['msg3']);
-}
-?>
