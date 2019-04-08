@@ -45,12 +45,13 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                  	<div class="row">
-                  		<div class="col-md-6">
-                  			<a href="?mod=admin&act=book&action=create" class="btn btn-success"><i class="fa fa-plus-circle"></i>Thêm mới</a>
-                  		</div>
-                  		
-                  	</div>
+                  	<?php  if ($_SESSION['user']['role_id'] == 1): ?>
+	                  	<div class="row">
+	                  		<div class="col-md-6">
+	                  			<a href="?mod=admin&act=book&action=create" class="btn btn-success"><i class="fa fa-plus-circle"></i>Thêm mới</a>
+	                  		</div>
+	                  	</div>
+                  	<?php endif ?>
                     <table id="datatable" class="table table-striped table-bordered">
                       <thead>
                         <tr>
@@ -80,11 +81,11 @@
 						        <td><?=$value['publisher_name']  ?></td>
 						        <td>
 									<a data-target="#myModal-<?=$value['id']?>" class="btn btn-info" title="Xem chi tiết sản phẩm" data-toggle="modal" ><i class="fa fa-eye"></i></a>
-									<?php if ($_SESSION['user']['role_id'] == 2): ?>
+									<?php if ($_SESSION['user']['role_id'] == 1): ?>
 										<a href="?mod=admin&act=edit&id=<?= $value['id']?>" class="btn btn-warning" title="Sửa thông tin sản phẩm"><i class="fa fa-edit"></i></a>
 									<?php endif ?>
-									<?php  if ($_SESSION['user']['role_id'] == 1): ?>
-										<a data-target="#modal-add-quantity-book-<?=$value['id']?>" type="button" class="btn btn-warning btn-edit-quantity-book" title="Thêm số lượng sản phẩm" data-id="<?= $value['id']?>" data-toggle="modal"><i class="fa fa-edit"></i></a>
+									<?php  if ($_SESSION['user']['role_id'] == 2): ?>
+										<a href="?mod=admin&act=book&action=bookAddQuantity&id=<?= $value['id']?>" type="button" class="btn btn-info btn-edit-quantity-book" title="Thêm số lượng sản phẩm" data-id="<?= $value['id']?>"><i class="fa fa-edit"></i></a>
 									<?php endif ?>
 									<a href="javascript:;" class="btn btn-danger delete" title="Xóa sản phẩm"><i class="fa fa-trash-o"></i></a>
 						        </td>
@@ -167,60 +168,7 @@
 									</div>
 								</div>
 							</div>	
-							<div class="modal fade" id="modal-add-quantity-book-<?=$value['id']?>" role="dialog">
-								<div class="modal-dialog modal-lg">
-									<div class="modal-content" >
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-											<h4 class="modal-title">Thêm số lượng sản phẩm</h4>
-										</div>
-										<div class="modal-body" style="height: 340px">
-											<div class="col-md-3">
-												<img src="<?php echo $value['image'] ?>" alt="" style="width: 235px; height: 250px;">
-											</div>
-											<div class="col-md-8 col-md-offset-1">
-												<div class="row">
-													<div class="col-md-3"><b>Mã sách</b></div>
-													<div class="col-md-9"><p><?=$value['code']?></p></div>
-												</div>
-												<div class="row">
-													<div class="col-md-3"><b>Tên sách</b></div>
-													<div class="col-md-9"><p><?=$value['name']?></p></div>
-												</div>
-												<div class="row">
-													<div class="col-md-3"><b>Giá bán</b></div>
-													<div class="col-md-9"><p><?=$value['price']?></p></div>
-												</div>
-												<div class="row">
-													<div class="col-md-3"><b>Thể loại</b></div>
-													<div class="col-md-9"><p><?=$value['type']?></p></div>
-												</div>
-												<div class="row">
-													<div class="col-md-3"><b>Tác giả</b></div>
-													<div class="col-md-9"><p><?=$value['author_name']?></p></div>
-												</div>
-												<div class="row">
-													<div class="col-md-3"><b>Nhà xuất bản</b></div>
-													<div class="col-md-9"><p><?=$value['publisher_name']?></p></div>
-												</div>	
-												<div class="row">
-													<div class="col-md-3"><b>Số lượng</b></div>
-													<div class="col-md-9">
-														<input type="email" class="form-control has-feedback-left" placeholder="Số lượng thêm" name="quantity" id="email" autofocus="hidden" required="">
-														<input type="hidden" name="book_id" value="<?=$value['id']?>">
-			                        					<span class="fa fa-envelope-o form-control-feedback left" aria-hidden="true"></span>
-			                        				</div>
-												</div>					
-											</div>
-										</div>
-																		
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-											<button type="button" class="btn btn-primary btn-save-add-quantity">Save changes</button>
-										</div>
-									</div>
-								</div>
-							</div>										
+																
 						<?php } ?>
                       </tbody>
                     </table>
@@ -242,6 +190,16 @@
 <?php 
 	if (isset($_COOKIE['msg3'])) {
 		echo '<script type="text/javascript">toastr.success("Thêm mới thành công");toastr.options.timeOut = 30000;</script>';
+		// unset($_COOKIE['msg3']);
+	}
+
+	if (isset($_COOKIE['updateQuantityBookSuccess'])) {
+		echo '<script type="text/javascript">toastr.success("Thêm số lượng thành công");toastr.options.timeOut = 30000;</script>';
+		// unset($_COOKIE['msg3']);
+	}
+
+	if (isset($_COOKIE['updateQuantityBookFail'])) {
+		echo '<script type="text/javascript">toastr.warning("Thêm số lượng không thành công");toastr.options.timeOut = 30000;</script>';
 		// unset($_COOKIE['msg3']);
 	}
 ?>

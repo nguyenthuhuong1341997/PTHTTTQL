@@ -91,23 +91,42 @@
 	      	]); 
 		}
 
-		function ajaxInforBookAddQuantity()
+		function bookAddQuantity()
 		{
-			$quantity = $_POST['quantity'];
-			$book_id = $_POST['book_id'];
-			$result = $this->book_model->ajaxInforBookForAddQuantity($book_id,$quantity);
-			if($result) {
-				echo json_encode([
-		        	'data' => null,
-		        	'status' => 'true',
-	      		]);
-	      		exit();
-			}
-			echo json_encode([
-	        	'data' => null,
-	        	'status' => 'false',
-      		]);
+			$id =$_GET['id'];
+			$result = $this->book_model->find($id);
+			require_once('views/admin/book/add_quantity_book.php');
+			// $quantity = $_POST['quantity'];
+			// $book_id = $_POST['book_id'];
+			// print_r($quantity);
+			// print_r($result);
+			// die();
+			// $result = $this->book_model->ajaxInforBookForAddQuantity($book_id,$quantity);
+			// if($result) {
+			// 	echo json_encode([
+		 //        	'data' => null,
+		 //        	'status' => 'true',
+	  //     		]);
+	  //     		exit();
+			// }
+			// echo json_encode([
+	  //       	'data' => null,
+	  //       	'status' => 'false',
+   //    		]);
 			
+		}
+
+		public function updateQuantity()
+		{
+			$data = $_POST;
+			$result = $this->book_model->ajaxInforBookForAddQuantity($data['idaddquantity'],$data['quantityadd']);
+			if ($result) {
+				setcookie('updateQuantityBookSuccess','Cập nhật thành công',time()+5);
+			} else {
+				setcookie('updateQuantityBookFail','Cập nhật không thành công',time()+5);
+			}
+			header('Location:?mod=admin&act=book');
+
 		}
 	}
  ?>

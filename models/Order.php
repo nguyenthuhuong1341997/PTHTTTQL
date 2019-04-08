@@ -157,7 +157,7 @@
 					WHERE [dbo].[order].[site_id] = [dbo].[site_book].[site_id]
 					AND [dbo].[order_detail].book_id = [dbo].[site_book].book_id
 					AND [dbo].[order].code = [dbo].[order_detail].[order_code]
-					AND [dbo].[order].code = '".$value['code']."'";
+					AND [dbo].[order].code = '".$value['order_code']."'";
 					$stmt4 = sqlsrv_query( $this->order_conn, $query4);
 			}
 			//Xóa trong bảng order

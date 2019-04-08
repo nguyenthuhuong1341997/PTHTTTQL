@@ -69,8 +69,11 @@
 						case 'store':
 							$book->store();
 							break;
-						case 'ajaxInforBookAddQuantity':
-							$book->ajaxInforBookAddQuantity();
+						case 'bookAddQuantity':
+							$book->bookAddQuantity();
+							break;
+						case 'updateQuantity':
+							$book->updateQuantity();
 							break;
 						default:
 							# code...
