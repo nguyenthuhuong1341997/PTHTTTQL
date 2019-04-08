@@ -1,22 +1,24 @@
 <?php 
 	session_start();
-	if (isset($_SESSION['user'])  & isset($_GET['mod'])) {
-		$mod = $_GET['mod'];
-	} else {
-		$mod = 'login';
-	}
-
-	if (isset($_GET['act'])) {
-		$act = $_GET['act'];
-	} else {
-		$act ='';
-	}
 	
-	if (isset($_GET['action'])) {
-		$action = $_GET['action'];
-	} else {
-		$action ='';
-	}
+		if (isset($_GET['mod'])) {
+			$mod = $_GET['mod'];
+		} else {
+			$mod = 'login';
+		}
+
+		if (isset($_GET['act'])) {
+			$act = $_GET['act'];
+		} else {
+			$act ='';
+		}
+		
+		if (isset($_GET['action'])) {
+			$action = $_GET['action'];
+		} else {
+			$action ='';
+		}
+	
 	
 	switch ($mod) {
 		case 'admin': {
@@ -27,7 +29,9 @@
 			include_once('controllers/OrderController.php');
 			$order= new OrderController();
 			include_once('controllers/UserController.php');
-			$user= new UserController();					
+			$user= new UserController();	
+			include_once('controllers/StatisticalController.php');
+			$statistical= new StatisticalController();				
 			switch ($act) {
 				case '':
 					$admin->index();
@@ -107,6 +111,10 @@
 					}
 					break;
 
+				case 'statistical': {
+					$statistical->index();
+					break;
+				}
 				default:
 					
 					break;
@@ -129,6 +137,12 @@
 			}	
 			break;
 		}	
+		case 'logout': {
+			include_once('controllers/AuthController.php');
+			$auth= new AuthController();
+			$auth->logout();
+			break;
+		}
 		default:
 			# code...
 			break;
