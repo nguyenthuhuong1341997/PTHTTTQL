@@ -70,7 +70,7 @@
                   <li><a href="?mod=admin&act=book"><i class="fa fa-book"></i> Quản lý sách <span class="fa fa-chevron-down"></span></a>
                   </li>
                   <li><a href="?mod=admin&act=order"><i class="fa fa-truck"></i> Quản lý đơn hàng </a></li>
-                  <li><a href="?mod=admin&act=listworkingday"><i class="fa fa-line-chart"></i> Thống kê <span class="fa fa-chevron-down"></span></a></li>
+                  <li><a href="?mod=admin&act=statistical"><i class="fa fa-line-chart"></i> Thống kê <span class="fa fa-chevron-down"></span></a></li>
                 </ul>
               </div>
               
@@ -122,7 +122,7 @@
                       </a>
                     </li>
                     <li><a href="javascript:;">Trợ giúp</a></li>
-                    <li><a href="?mod=login"><i class="fa fa-sign-out pull-right"></i> Đăng xuất</a></li>
+                    <li><a href="?mod=logout"><i class="fa fa-sign-out pull-right"></i> Đăng xuất</a></li>
                   </ul>
                 </li>
 

@@ -32,5 +32,11 @@
 			echo json_encode($response);
 			exit;
 		}
+
+		public function logout()
+		{
+			session_destroy();
+			header('Location:?mod=login');
+		}
 	}
  ?>
