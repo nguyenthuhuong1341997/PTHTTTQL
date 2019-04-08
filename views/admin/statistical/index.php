@@ -26,10 +26,11 @@
 ?>
 <script>
 	window.onload = function () {
-		var revenueSite =JSON.parse( '<?php echo json_encode($revenueSites); ?>' );
 		var chart1 = new CanvasJS.Chart("chartContainerColumn", {
 		title:{
-			text: "Doanh số công ty tại các chi nhánh"              
+			text: "Doanh số công ty tại các chi nhánh",
+			fontWeight: "normal",
+			fontFamily: "arial"           
 		},
 		
 		
@@ -47,28 +48,28 @@
 	});
 	chart1.render();
 	 
-	// var chart = new CanvasJS.Chart("chartContainer", {
-	// 	animationEnabled: true,
-	// 	title:{
-	// 		text: "Company Revenue by Year"
-	// 	},
-	// 	axisY: {
-	// 		title: "Revenue in USD",
-	// 		valueFormatString: "#0,,.",
-	// 		suffix: "mn",
-	// 		prefix: "$"
-	// 	},
-	// 	data: [{
-	// 		type: "spline",
-	// 		markerSize: 5,
-	// 		xValueFormatString: "YYYY",
-	// 		yValueFormatString: "$#,##0.##",
-	// 		xValueType: "dateTime",
-	// 		dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
-	// 	}]
-	// });
+	var chart = new CanvasJS.Chart("chartContainer", {
+		animationEnabled: true,
+		title:{
+			text: "Thu nhập theo hàng năm của từng chi nhánh",
+			fontWeight: "normal",
+			fontFamily: "arial"
+		},
+		axisY: {
+			title: "VND",
+			suffix: "VND"
+		},
+		axisX: {
+			title: "Tháng",
+		},
+		data: [{
+			type: "spline",
+			markerSize: 5,
+			dataPoints: <?php echo json_encode($revenueYears); ?>
+		}]
+	});
 	 
-	// chart.render();
+	chart.render();
 	 
 	}
 </script>
@@ -95,33 +96,42 @@
 			<div>
 				<div id="chartContainerColumn" style="height: 370px; width: 100%;"></div>
 			</div>
-            <div class="row" style="margin-top: 20px;">
-              	<div class="col-md-3">
-              		<select class="select2_single form-control" tabindex="-1" name="site_id">
-              			<option value="">All</option>
-	                    <?php foreach ($sites as $key => $value): ?>
-	                      	<option value="<?= $value['id']?>"><?= $value['name']?></option>
-	                    <?php endforeach ?>
-	                 </select>
-              	</div>
-              	<div class="col-md-3">
-              		<select class="select2_single form-control" tabindex="-1" name="publisher">
-	                    
-	                      <option value="1">1</option>
-	                    
-	                  </select>
-              	</div>
-              	<div class="col-md-3">
-              		<select class="select2_single form-control" tabindex="-1" name="publisher">
-	                    
-	                      <option value="2">2</option>
-	                    
-	                </select>
-              	</div>
-              	<div class="col-md-2">
-              		<button class="btn btn-info">Thống kê</button>
-              	</div>
-            </div>
+
+			<form action="?mod=admin&act=statistical" method="POST">
+	            <div class="row" style="margin: 20px 0px;">
+	              	<div class="col-md-3">
+	              		<p>Chi nhánh</p>
+	              		<select class="select2_single form-control" tabindex="-1" name="site_id">
+		                    <?php foreach ($sites as $key => $value): ?>
+		                    	<?php if ($key == $site_id): ?>
+		                    		<option value="<?= $value['id']?>" selected="true"><?= $value['name']?></option>
+		                    	<?php else: ?>
+		                    		<option value="<?= $value['id']?>"><?= $value['name']?></option>
+		                    	<?php endif ?>
+		                      	
+		                    <?php endforeach ?>
+		                 </select>
+	              	</div>
+	              	<div class="col-md-3">
+	              		<p>Năm</p>
+	              		<select class="select2_single form-control" tabindex="-1" name="year">
+		                    	<?php foreach ($years as $key => $value): ?>
+		                    		<?php if ($key == $site_id): ?>
+		                    		<option value="<?= $value['year']?>" selected="true"><?= $value['year']?></option>
+		                    	<?php else: ?>
+		                    		<option value="<?= $value['year']?>"><?= $value['year']?></option>
+		                    	<?php endif ?>
+		                    		
+		                    	<?php endforeach ?>
+		                  </select>
+	              	</div>
+	              	
+	              	<div class="col-md-2">
+	              		<p> </p>
+	              		<button class="btn btn-info" name="revenue" style="margin-top: 19px;">Thống kê</button>
+	              	</div>
+	            </div>
+			</form>
             
             <div id="chartContainer" style="height: 370px; width: 100%;"></div>
         </div>

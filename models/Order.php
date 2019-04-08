@@ -171,5 +171,22 @@
 			}
 			return true;
 		}
+
+		function getYear()
+		{
+			$query= "SELECT DISTINCT YEAR([dbo].[order].created_date) as year
+					FROM [dbo].[order]";
+			$stmt = sqlsrv_query( $this->order_conn, $query );
+			if( $stmt === false) {
+				echo "Khong ton tai";
+			    die( print_r( sqlsrv_errors(), true) );
+			}
+			$result = array();
+			while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
+				$result[] = $row ;
+			}
+
+			return $result;
+		}
 	}
 ?>
