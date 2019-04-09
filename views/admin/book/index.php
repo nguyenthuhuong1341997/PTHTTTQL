@@ -189,14 +189,13 @@ if (isset($_COOKIE['msg3'])) {
 	echo '<script type="text/javascript">toastr.success("Thêm mới thành công");toastr.options.timeOut = 30000;</script>';
 	// unset($_COOKIE['msg3']);
 }
-
+if (isset($_COOKIE['msg'])) {
+	echo '<script type="text/javascript">toastr.success("Cập nhật thành công");toastr.options.timeOut = 30000;</script>';
+	// unset($_COOKIE['msg3']);
+}
 if (isset($_COOKIE['updateQuantityBookSuccess'])) {
 	echo '<script type="text/javascript">toastr.success("Thêm số lượng thành công");toastr.options.timeOut = 30000;</script>';
 	// unset($_COOKIE['msg3']);
 }
 
-if (isset($_COOKIE['updateQuantityBookFail'])) {
-	echo '<script type="text/javascript">toastr.warning("Thêm số lượng không thành công");toastr.options.timeOut = 30000;</script>';
-	// unset($_COOKIE['msg3']);
-}
 ?>

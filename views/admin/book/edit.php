@@ -105,7 +105,21 @@ include_once 'views/layout/admin/header.php';
                           </div>
 			                  </div>
                   		</div>
-
+                      <div class="row">
+                        <?php
+foreach ($site_book as $key => $sb) {?>
+                            <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                              <div class="row">
+                                <div class="col-md-3" style="padding-left: 20px;padding-top: 10px;">
+                                  <label for="siteHN"><?=$sb['location']?></label>
+                                </div>
+                                <div class="col-md-9">
+                                  <input type="number" id="siteHN" class="form-control has-feedback-left" value="<?=$sb['quantity']?>" name="<?=$sb['scode']?>" min="0" style="padding-left: 15px;">
+                                </div>
+                              </div>
+                            </div>
+                          <?php }?>
+                      </div>
                   		<div class="row">
                         <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
                           <div class="row">

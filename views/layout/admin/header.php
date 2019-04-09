@@ -7,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Lập trình mạng</title>
-
+    <title>QUẢN LÝ - YOURSTORE</title>
+    <link rel="icon" type="image/png" href="public/Login/images/icons/favicon.ico"/>
     <!-- Bootstrap -->
     <link href="public/admin/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -65,11 +65,15 @@ echo $_SESSION['user']['name'];
               <div class="menu_section">
                 <h3>Quản lý</h3>
                 <ul class="nav side-menu">
+                  <?php
+if ($_SESSION['user']['rcode'] == 'ROLE_BOSS') {
+	?>
                   <li <?php if (isset($_GET['act'])) {
-	if ($_GET['act'] == 'user') {echo 'class="active"';}
-}
-?> ><a href="?mod=admin&act=user"><i class="fa fa-users"></i> Quản lý nhân viên</a>
+		if ($_GET['act'] == 'user') {echo 'class="active"';}
+	}
+	?> ><a href="?mod=admin&act=user"><i class="fa fa-users"></i> Quản lý nhân viên</a>
                   </li>
+                  <?php }?>
                   <li <?php if (isset($_GET['act'])) {
 	if ($_GET['act'] == 'book') {echo 'class="active"';}
 }

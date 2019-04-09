@@ -16,7 +16,7 @@ $(document).ready(function () {
 					    }
 					}
 					data.site_book.forEach(function(sb){
-						$('.site_book p[slug='+sb.code+']').text(sb.quantity);
+						$('.site_book p[slug='+sb.scode+']').text(sb.quantity);
 					})
 					$('#modal-detail').modal('show');
 				}

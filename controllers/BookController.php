@@ -45,8 +45,8 @@ class BookController {
 		$data['description'] = strip_tags($data['description']);
 		$book = $this->book_model->find($data['code']);
 		if ($book != null) {
-			setcookie('code_exits', 'Thêm mới thất bại!', time() + 5);
-			header('Location:?mod=admin&act=book&action=create');
+			echo json_encode(false);
+			return;
 		} else {
 			if ($_FILES['image']['error'] > 0) {
 				echo "lỗi";
@@ -57,8 +57,13 @@ class BookController {
 			}
 			$book = $this->book_model->insert($data);
 			if ($book) {
-				setcookie('msg3', 'Thêm mới thành công', time() + 5);
-				header('Location:?mod=admin&act=book');
+				if ($this->book_model->insertQuantitySite($data['code'], 'SITE_HANOI', $data['site_hn'])
+					&& $this->book_model->insertQuantitySite($data['code'], 'SITE_DANANG', $data['site_dn'])
+					&& $this->book_model->insertQuantitySite($data['code'], 'SITE_SAIGON', $data['site_sg'])
+				) {
+					setcookie('msg3', 'Thêm mới thành công', time() + 5);
+					header('Location:?mod=admin&act=book');
+				}
 			}
 		}
 	}
@@ -69,6 +74,7 @@ class BookController {
 		$types = $this->type_model->list();
 		$authors = $this->author_model->list();
 		$publishers = $this->publisher_model->list();
+		$site_book = $this->book_model->findQuantitySite($code);
 		require_once 'views/admin/book/edit.php';
 	}
 
@@ -87,10 +93,15 @@ class BookController {
 				$data['image'] = $st;
 			}
 		}
-		$admin = $this->book_model->update($data);
-		if ($admin) {
-			setcookie('msg', 'Cập nhật thành công', time() + 5);
-			header('Location:?mod=admin&act=book');
+		$book1 = $this->book_model->update($data);
+		if ($book1) {
+			if ($this->book_model->updateQuantitySite($book['id'], 'SITE_HANOI', $data['SITE_HANOI'])
+				&& $this->book_model->updateQuantitySite($book['id'], 'SITE_DANANG', $data['SITE_DANANG'])
+				&& $this->book_model->updateQuantitySite($book['id'], 'SITE_SAIGON', $data['SITE_SAIGON'])
+			) {
+				setcookie('msg', 'Cập nhật thành công', time() + 5);
+				header('Location:?mod=admin&act=book');
+			}
 		} else {
 			setcookie('msg', 'Cập nhật không thành công', time() + 5);
 		}
@@ -116,27 +127,10 @@ class BookController {
 	}
 
 	function bookAddQuantity() {
-		$id = $_GET['id'];
-		$result = $this->book_model->find($id);
+		$code = $_GET['code'];
+		$result = $this->book_model->find($code);
+		$site_book = $this->book_model->findQuantitySite($code);
 		require_once 'views/admin/book/add_quantity_book.php';
-		// $quantity = $_POST['quantity'];
-		// $book_id = $_POST['book_id'];
-		// print_r($quantity);
-		// print_r($result);
-		// die();
-		// $result = $this->book_model->ajaxInforBookForAddQuantity($book_id,$quantity);
-		// if($result) {
-		// 	echo json_encode([
-		//        	'data' => null,
-		//        	'status' => 'true',
-		//     		]);
-		//     		exit();
-		// }
-		// echo json_encode([
-		//       	'data' => null,
-		//       	'status' => 'false',
-		//    		]);
-
 	}
 
 	public function updateQuantity() {
@@ -144,10 +138,11 @@ class BookController {
 		$result = $this->book_model->ajaxInforBookForAddQuantity($data['idaddquantity'], $data['quantityadd']);
 		if ($result) {
 			setcookie('updateQuantityBookSuccess', 'Cập nhật thành công', time() + 5);
+			header('Location:?mod=admin&act=book');
 		} else {
 			setcookie('updateQuantityBookFail', 'Cập nhật không thành công', time() + 5);
+			header('Location:?mod=admin&act=book&action=bookAddQuantity&code=' . $data['code']);
 		}
-		header('Location:?mod=admin&act=book');
 
 	}
 }

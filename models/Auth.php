@@ -14,9 +14,9 @@ class Auth {
 
 	function check($email, $pass) {
 
-		$query = "SELECT u.id, u.name, u.code, u.username, r.code as rcode, s.code as scode FROM [dbo].[user] u
+		$query = "SELECT u.id, u.name, u.code, u.username, u.site_id, r.code as rcode, s.code as scode FROM [dbo].[user] u
 					join dbo.[role] r on r.id = u.role_id join dbo.[site] s on s.id = u.site_id
-					WHERE email='" . $email . "' AND password='" . $pass . "' and s.code = 'SITE_HANOI'";
+					WHERE email='" . $email . "' AND password='" . $pass . "'";
 
 		$stmt = sqlsrv_query($this->auth, $query);
 		if ($stmt === false) {
