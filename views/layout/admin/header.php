@@ -101,6 +101,12 @@ if ($_SESSION['user']['rcode'] == 'ROLE_BOSS' || $_SESSION['user']['rcode'] == '
 ?>>
   <a href="?mod=admin&act=top-sale"><i class="fa fa-line-chart"></i> Sản phẩm bán chạy</a>
       </li>
+      <li <?php if (isset($_GET['act'])) {
+	if ($_GET['act'] == 'order-in-date') {echo 'class="active"';}
+}
+?>>
+  <a href="?mod=admin&act=order-in-date"><i class="fa fa-line-chart"></i> Báo cáo ngày</a>
+      </li>
                 </ul>
               </div>
 

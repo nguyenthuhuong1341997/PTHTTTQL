@@ -41,8 +41,13 @@ class StatisticalController {
 		require_once 'views/admin/statistical/main.php';
 	}
 	public function orderInDate() {
-		$orders = $this->statistical_model->getListOrderByDate($_GET['date']);
-		require_once 'views/admin/statistical/main.php';
+		if (!isset($_GET['date'])) {
+			$date = date('Y-m-d');
+		} else {
+			$date = $_GET['date'];
+		}
+		$orders = $this->statistical_model->getListOrderByDate($date);
+		require_once 'views/admin/statistical/order_in_date.php';
 	}
 	public function getListOrderByBook() {
 		$book = $this->book_model->find($_GET['code']);
@@ -52,8 +57,8 @@ class StatisticalController {
 			'orders' => $oders,
 		]);
 	}
-	public function getListOrderByDate() {
-		$orders = $this->statistical_model->getListOrderByDate($_GET['date']);
+	public function findOrderDetail() {
+		$orders = $this->statistical_model->findOrderDetail($_GET['code']);
 		echo json_encode($orders);
 	}
 

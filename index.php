@@ -170,6 +170,14 @@ case 'admin':{
 				$statistical->getListOrderByBook();
 				break;
 			}
+		case 'order-in-date':{
+				$statistical->orderInDate();
+				break;
+			}
+		case 'get-order-detail':{
+				$statistical->findOrderDetail();
+				break;
+			}
 		default:
 
 			break;

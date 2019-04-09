@@ -95,11 +95,12 @@ class Statistical {
 		return $result;
 	}
 	function getListOrderByDate($date) {
-		$query = "select o.code, o.created_date, s.location, sum(od.price * od.quantity) as total_price from dbo.[order] o
+		$query = "select o.code, o.created_date, s.location, sum(od.price * od.quantity) as total_price, sum(od.quantity) as total_quantity from dbo.[order] o
 				left join dbo.[site] s on o.site_id = s.id
 				inner join dbo.[order_detail] od on o.code = od.order_code
 				where CONVERT(DATE, o.created_date)  = '" . $date . "' and o.status = 4
-				group  by o.code, o.status, o.created_date, s.location";
+				group  by o.code, o.status, o.created_date, s.location order by o.created_date desc";
+
 		$stmt = sqlsrv_query($this->statistical_conn, $query);
 		if ($stmt === false) {
 			echo "Khong ton tai";
@@ -111,6 +112,15 @@ class Statistical {
 
 		}
 		return $result;
+	}
+	function findOrderDetail($code) {
+		$sql = "SELECT b.name, b.image, od.quantity, od.price, (od.quantity * od.price) as total_price FROM [dbo].[order_detail] od inner join dbo.book b on od.book_id = b.id where od.order_code = '" . $code . "'";
+		$stmt = sqlsrv_query($this->statistical_conn, $sql);
+		$data = array();
+		while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+			$data[] = $row;
+		}
+		return $data;
 	}
 }
 ?>
