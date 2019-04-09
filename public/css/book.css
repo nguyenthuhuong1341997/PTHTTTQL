@@ -16,3 +16,10 @@
 .list-book .quantityBook p,b {
 	margin: 10px 0px;
 }
+.nav-item>.nav-link .right {
+	width: unset;
+    transition: transform ease-in-out .3s;
+}
+.active>.nav-link .right {
+    transform: rotate(-90deg);
+}

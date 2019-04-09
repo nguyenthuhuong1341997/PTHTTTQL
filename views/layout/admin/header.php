@@ -64,7 +64,7 @@ echo $_SESSION['user']['name'];
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
                 <h3>Quản lý</h3>
-                <ul class="nav side-menu">
+                <ul class="nav side-menu" data-widget="tree">
                   <?php
 if ($_SESSION['user']['rcode'] == 'ROLE_BOSS') {
 	?>
@@ -95,6 +95,36 @@ if ($_SESSION['user']['rcode'] == 'ROLE_BOSS' || $_SESSION['user']['rcode'] == '
 	}
 	?>><a href="?mod=admin&act=statistical"><i class="fa fa-line-chart"></i> Thống kê </a></li>
  <?php }?>
+<li><a href="?mod=admin&act=abc"><i class="fa fa-line-chart"></i> Thống kê abc</a>
+      </li>
+
+      <li class="nav-item has-treeview">
+            <a href="javascript:;" class="nav-link">
+              <i class="nav-icon fa fa-pie-chart"></i>
+              Charts
+              <i class="right fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+              <li class="nav-item">
+                <a href="pages/charts/chartjs.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>ChartJS</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/charts/flot.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Flot</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/charts/inline.html" class="nav-link">
+                  <i class="fa fa-circle-o nav-icon"></i>
+                  <p>Inline</p>
+                </a>
+              </li>
+            </ul>
+          </li>
                 </ul>
               </div>
 

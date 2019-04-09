@@ -162,6 +162,10 @@ case 'admin':{
 				$statistical->index();
 				break;
 			}
+		case 'abc':{
+				$statistical->main();
+				break;
+			}
 		default:
 
 			break;
