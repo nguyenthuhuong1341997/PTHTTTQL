@@ -74,19 +74,27 @@ if ($_SESSION['user']['rcode'] == 'ROLE_BOSS') {
 	?> ><a href="?mod=admin&act=user"><i class="fa fa-users"></i> Quản lý nhân viên</a>
                   </li>
                   <?php }?>
+                                    <?php
+if ($_SESSION['user']['rcode'] == 'ROLE_BOSS' || $_SESSION['user']['rcode'] == 'ROLE_ADMIN') {
+	?>
                   <li <?php if (isset($_GET['act'])) {
-	if ($_GET['act'] == 'book') {echo 'class="active"';}
-}
-?>><a href="?mod=admin&act=book"><i class="fa fa-book"></i> Quản lý sách </a>
+		if ($_GET['act'] == 'book') {echo 'class="active"';}
+	}
+	?>><a href="?mod=admin&act=book"><i class="fa fa-book"></i> Quản lý sách </a>
                   </li>
+                   <?php }?>
                   <li <?php if (isset($_GET['act'])) {
 	if ($_GET['act'] == 'order') {echo 'class="active"';}
 }
 ?>><a href="?mod=admin&act=order"><i class="fa fa-truck"></i> Quản lý đơn hàng </a></li>
+                                    <?php
+if ($_SESSION['user']['rcode'] == 'ROLE_BOSS' || $_SESSION['user']['rcode'] == 'ROLE_ADMIN') {
+	?>
                   <li <?php if (isset($_GET['act'])) {
-	if ($_GET['act'] == 'statistical') {echo 'class="active"';}
-}
-?>><a href="?mod=admin&act=statistical"><i class="fa fa-line-chart"></i> Thống kê </a></li>
+		if ($_GET['act'] == 'statistical') {echo 'class="active"';}
+	}
+	?>><a href="?mod=admin&act=statistical"><i class="fa fa-line-chart"></i> Thống kê </a></li>
+ <?php }?>
                 </ul>
               </div>
 
