@@ -95,36 +95,12 @@ if ($_SESSION['user']['rcode'] == 'ROLE_BOSS' || $_SESSION['user']['rcode'] == '
 	}
 	?>><a href="?mod=admin&act=statistical"><i class="fa fa-line-chart"></i> Thống kê </a></li>
  <?php }?>
-<li><a href="?mod=admin&act=abc"><i class="fa fa-line-chart"></i> Thống kê abc</a>
+<li <?php if (isset($_GET['act'])) {
+	if ($_GET['act'] == 'top-sale') {echo 'class="active"';}
+}
+?>>
+  <a href="?mod=admin&act=top-sale"><i class="fa fa-line-chart"></i> Sản phẩm bán chạy</a>
       </li>
-
-      <li class="nav-item has-treeview">
-            <a href="javascript:;" class="nav-link">
-              <i class="nav-icon fa fa-pie-chart"></i>
-              Charts
-              <i class="right fa fa-angle-left pull-right"></i>
-            </a>
-            <ul class="nav nav-treeview" style="display: none;">
-              <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>ChartJS</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Flot</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/charts/inline.html" class="nav-link">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Inline</p>
-                </a>
-              </li>
-            </ul>
-          </li>
                 </ul>
               </div>
 

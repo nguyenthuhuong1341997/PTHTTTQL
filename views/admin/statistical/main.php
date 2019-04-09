@@ -5,7 +5,7 @@ include_once 'views/layout/admin/header.php';
         <div class="">
 	            <div class="page-title">
 	              	<div class="title_left">
-	                	<h3>Quản Lý Đơn Đặt Hàng</h3>
+	                	<h3>THỐNG KÊ</h3>
 	              	</div>
 
 	              	<div class="title_right">
@@ -26,30 +26,10 @@ include_once 'views/layout/admin/header.php';
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   	<div class="x_title">
-	                    <h2>Danh sách đơn đặt hàng chờ duyệt</h2>
-	                    <ul class="nav navbar-right panel_toolbox">
-	                      	<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-	                      	</li>
-	                      	<li class="dropdown">
-		                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-		                        <ul class="dropdown-menu" role="menu">
-			                        <li><a href="#">Settings 1</a>
-			                        </li>
-			                        <li><a href="#">Settings 2</a>
-			                        </li>
-		                        </ul>
-	                      	</li>
-		                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-		                    </li>
-	                    </ul>
+	                    <h2>Danh sách sản phẩm bán chạy nhất</h2>
                     	<div class="clearfix"></div>
                   	</div>
                   	<div class="x_content">
-	                  	<div class="row">
-	                  		<div class="col-md-6">
-	                  			<a href="?mod=admin&act=create" class="btn btn-success"><i class="fa fa-plus-circle"></i>Thêm mới</a>
-	                  		</div>
-	                  	</div>
 	                    <table id="wait-order-table" class="table table-striped table-bordered">
 	                      	<thead>
 		                        <tr>
@@ -127,41 +107,22 @@ include_once 'views/layout/admin/header.php';
 						<div class="col-md-9"><p slug="publisher_name"></p></div>
 					</div>
 					<div class="row">
-						<div class="col-md-3"><b>Description</b></div>
-						<div class="col-md-9"><p slug="description"></p></div>
+						<div class="col-md-3"><b>Tổng thu nhập</b></div>
+						<div class="col-md-9"><p slug="total"></p></div>
 					</div>
 					<center>
 						<table class="table table-striped table-bordered">
 	                      	<thead>
 		                        <tr>
-		                          	<th>Mã sách</th>
-		                          	<th>Tên sách</th>
-							        <th>Ảnh</th>
-							        <th>Đơn giá</th>
-							        <th>Số lần bán</th>
-							        <th>Số lượng bán</th>
-							        <th>Hành động</th>
+		                          	<th>Mã hóa đơn</th>
+		                          	<th>Ngày tạo</th>
+							        <th>Đã mua</th>
+							        <th>Tổng giá</th>
+							        <th>Chi nhánh</th>
 		                        </tr>
 	                      	</thead>
 		                    <tbody>
-	                        <!-- <?php foreach ($top_sale as $key => $value) {?>
 
-
-						    		<tr id="<?php echo $value['id']; ?>">
-					    			<td><?=$value['code']?></td>
-					    			<td><?=$value['name']?></td>
-							        <td><div style="background-image: url(<?=$value['image']?>); width: 100px; height: 100px; background-repeat: no-repeat; background-position: center; background-size: cover;"></div></td>
-							        <td><?=$value['price']?></td>
-							        <td><?=$value['total_count']?></td>
-							        <td><?=$value['total_quantity']?></td>
-							        <td>
-										<a href="javascript:void(0)" slug-code="<?=$value['code']?>" class="open-detail btn btn-info" title="Xem chi tiết sản phẩm"><i class="fa fa-eye"></i></a>
-							        </td>
-						      	</tr>
-
-
-
-							<?php }?> -->
 	                      </tbody>
 	                    </table>
 					</center>
@@ -180,28 +141,41 @@ include_once 'views/layout/admin/footer.php';
 <script>
 	$(document).ready(function () {
 		$(document).on('click', '.open-detail', function(){
-$('#modal-detail').modal('show');
 			var code = $(this).attr('slug-code');
-			// $.ajax({
-			// 	url : '?mod=admin&act=book&action=find-one&code=' + code,
-			// 	type : 'get',
-			// 	success : function(res){
-			// 		if(res){
-			// 			var data = JSON.parse(res);
-			// 			$('#modal-detail img').attr('src', data.book['image']);
-			// 			for (var key in data.book) {
-			// 			    if (data.book.hasOwnProperty(key)) {
-			// 			    	console.log(key);
-			// 			    	$('#modal-detail p[slug='+key+']').html(data.book[key]);
-			// 			    }
-			// 			}
-			// 			data.site_book.forEach(function(sb){
-			// 				$('.site_book p[slug='+sb.scode+']').text(sb.quantity);
-			// 			})
-			// 			$('#modal-detail').modal('show');
-			// 		}
-			// 	}
-			// })
+			$.ajax({
+				url : '?mod=admin&act=get-list-order-by-book&code=' + code,
+				type : 'get',
+				success : function(res){
+					if(res){
+						var data = JSON.parse(res);
+						$('#modal-detail img').attr('src', data.book['image']);
+						for (var key in data.book) {
+						    if (data.book.hasOwnProperty(key)) {
+						    	$('#modal-detail p[slug='+key+']').html(data.book[key]);
+						    	if(key === 'price')
+						    		$('#modal-detail p[slug='+key+']').html(fomatVND(data.book[key]));
+						    }
+						}
+						var total = 0;
+						$('#modal-detail tbody').children().remove();
+						data.orders.forEach(function(od){
+							total += od.total_price;
+							$('#modal-detail tbody').append('<tr>'
+					    			+'<td>'+od.code+'</td>'
+					    			+'<td>'+od.created_date.date.split(' ')[0]+'</td>'
+							        +'<td>'+od.quantity+'</td>'
+							        +'<td>'+fomatVND(od.total_price)+'</td>'
+							        +'<td>'+od.location+'</td>'
+						      	+'</tr>')
+						})
+						$('#modal-detail p[slug=total]').text(fomatVND(total));
+						$('#modal-detail').modal('show');
+					}
+				}
+			})
 		});
+		function fomatVND(input) {
+            return input.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+        }
 	})
 </script>

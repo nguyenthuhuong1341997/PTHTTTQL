@@ -162,8 +162,12 @@ case 'admin':{
 				$statistical->index();
 				break;
 			}
-		case 'abc':{
+		case 'top-sale':{
 				$statistical->main();
+				break;
+			}
+		case 'get-list-order-by-book':{
+				$statistical->getListOrderByBook();
 				break;
 			}
 		default:
