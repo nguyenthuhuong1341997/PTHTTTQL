@@ -1,5 +1,6 @@
 <?php
 include_once 'views/layout/admin/header.php';
+include_once 'models/CONSTANT.php';
 ?>
  <div class="right_col list-book" role="main">
           <div class="">
@@ -73,7 +74,7 @@ include_once 'views/layout/admin/header.php';
 					    		<tr id="<?php echo $value['id']; ?>">
 				    			<td><?=$value['id']?></td>
 				    			<td><?=$value['name']?></td>
-						        <td><div style="background-image: url(<?=$value['image']?>); width: 100px; height: 100px; background-repeat: no-repeat; background-position: center; background-size: cover;"></div></td>
+						        <td><div style="background-image: url('<?php echo $HOST . $value['image']; ?>'); width: 100px; height: 100px; background-repeat: no-repeat; background-position: center; background-size: cover;"></div></td>
 						        <td><?=$value['author_name']?></td>
 						        <td><?=$value['type_name']?></td>
 						        <td><?=$value['publisher_name']?></td>
