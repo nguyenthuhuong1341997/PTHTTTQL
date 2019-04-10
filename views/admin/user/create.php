@@ -143,7 +143,7 @@
 <?php 
  	include_once 'views/layout/admin/footer.php';
 ?>
-<script type="text/javascript " src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script type="text/javascript " src="public/admin/js/toastr.min.js"></script>
 <script type="text/javascript">
 	$('#myDatepicker2').datetimepicker({
         format: 'DD.MM.YYYY'

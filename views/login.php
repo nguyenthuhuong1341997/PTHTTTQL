@@ -25,8 +25,8 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="public/Login/css/util.css">
 	<link rel="stylesheet" type="text/css" href="public/Login/css/main.css">
-	 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="public/admin/js/toastr.min.css">
+	<script src="public/admin/js/sweetalert.min.js"></script>
 <!--===============================================================================================-->
 </head>
 <body>
@@ -119,8 +119,8 @@
 	<script src="public/Login/vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 	<script src="public/Login/js/main.js"></script>
-	<script type="text/javascript " src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script type="text/javascript " src="public/admin/js/toastr.min.js"></script>
+	<script src="public/admin/js/sweetalert.min.js"></script>
 	<script src="public/js/login.js"></script>
 </body>
 </html>
