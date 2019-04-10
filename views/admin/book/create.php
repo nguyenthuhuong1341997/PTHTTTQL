@@ -214,6 +214,8 @@ include_once 'views/layout/admin/footer.php';
         success : function(res) {
           if(JSON.parse(res) === false) {
             toastr.error("Mã sách đã tồn tại!");
+          } else if(JSON.parse(res) === true){
+            window.location.replace('?mod=admin&act=book');
           }
         }
       })

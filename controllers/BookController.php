@@ -48,13 +48,18 @@ class BookController {
 			echo json_encode(false);
 			return;
 		} else {
-			if ($_FILES['image']['error'] > 0) {
-				echo "lỗi";
+			if (!empty($_FILES['image']['name']) && $_FILES['image']['size'] != 0) {
+				if ($_FILES['image']['error'] > 0) {
+					echo "lỗi";
+				} else {
+					move_uploaded_file($_FILES['image']['tmp_name'], 'public/upload/' . $_FILES['image']['name']);
+					$st = 'public/upload/' . $_FILES['image']['name'];
+					$data['image'] = $st;
+				}
 			} else {
-				move_uploaded_file($_FILES['image']['tmp_name'], 'public/upload/' . $_FILES['image']['name']);
-				$st = 'public/upload/' . $_FILES['image']['name'];
-				$data['image'] = $st;
+				$data['image'] = null;
 			}
+
 			$book = $this->book_model->insert($data);
 			if ($book) {
 				if ($this->book_model->insertQuantitySite($data['code'], 'SITE_HANOI', $data['site_hn'])
@@ -62,7 +67,7 @@ class BookController {
 					&& $this->book_model->insertQuantitySite($data['code'], 'SITE_SAIGON', $data['site_sg'])
 				) {
 					setcookie('msg3', 'Thêm mới thành công', time() + 5);
-					header('Location:?mod=admin&act=book');
+					echo json_encode(true);
 				}
 			}
 		}

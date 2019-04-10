@@ -59,10 +59,11 @@ class Statistical {
 		return $result;
 	}
 	function getTopSale() {
-		$query = "select b.code, b.name, b.image, b.price, sum(od.quantity) as total_quantity, count(b.code) as total_count from dbo.[order] o
+		$query = "select b.code, b.name, CAST(b.[image] AS NVARCHAR(1000)) as image, b.price, sum(od.quantity) as total_quantity, count(b.code) as total_count from dbo.[order] o
 			join dbo.[order_detail] od on od.order_code = o.code
 			join dbo.[book] b on od.book_id = b.id
-			group by b.code, b.name, b.image, b.price order by total_count desc, total_quantity desc";
+			group by b.code, b.name, CAST(b.[image] AS NVARCHAR(1000)), b.price order by total_count desc, total_quantity desc";
+
 		$stmt = sqlsrv_query($this->statistical_conn, $query);
 		if ($stmt === false) {
 			echo "Khong ton tai";
@@ -114,7 +115,7 @@ class Statistical {
 		return $result;
 	}
 	function findOrderDetail($code) {
-		$sql = "SELECT b.name, b.image, od.quantity, od.price, (od.quantity * od.price) as total_price FROM [dbo].[order_detail] od inner join dbo.book b on od.book_id = b.id where od.order_code = '" . $code . "'";
+		$sql = "SELECT b.name, CAST(b.[image] AS NVARCHAR(1000)) as image, od.quantity, od.price, (od.quantity * od.price) as total_price FROM [dbo].[order_detail] od inner join dbo.book b on od.book_id = b.id where od.order_code = '" . $code . "'";
 		$stmt = sqlsrv_query($this->statistical_conn, $sql);
 		$data = array();
 		while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
