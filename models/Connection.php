@@ -10,7 +10,7 @@
 			$serverName="NTHuong";
 			$username="sa";
 			$password="123456";
-			$dbname="QuanLyBanSach";
+			$dbname="QL_BANSACH_HANOI";
 			// Tạo ra kết nối đến CSDL connection
 			$connectionInfo = array( "Database"=>$dbname, "UID"=>$username, "PWD"=>$password, 'CharacterSet' => 'UTF-8');
 			$this->conn = sqlsrv_connect( $serverName, $connectionInfo);

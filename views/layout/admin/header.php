@@ -28,9 +28,9 @@
     <link href="public/admin/build/css/custom.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="public/admin/me.css">
     <link rel="stylesheet" type="text/css" href="public/css/book.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    <script src="https://cdn.ckeditor.com/ckeditor5/12.0.0/classic/ckeditor.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="public/admin/js/toastr.min.css">
+    <script src="public/admin/js/ckeditor.js"></script>
+    <script src="public/admin/js/sweetalert.min.js"></script>
   </head>
 
   <body class="nav-md">
