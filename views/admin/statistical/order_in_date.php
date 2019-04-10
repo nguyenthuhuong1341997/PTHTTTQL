@@ -1,5 +1,6 @@
 <?php
 include_once 'views/layout/admin/header.php';
+include_once 'models/CONSTANT.php';
 ?>
 <div class="right_col" role="main" id="order-wait-section">
         <div class="">
@@ -26,26 +27,46 @@ include_once 'views/layout/admin/header.php';
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   	<div class="x_title">
-	                    <h2>Danh sách hóa đơn bán trong ngày: <b><?=$date?></b></h2>
+	                    <h2>Danh sách hóa đơn bán trong ngày: <b><?=$date_selected?></b></h2>
                     	<div class="clearfix"></div>
                   	</div>
                   	<div class="x_content">
                   		<div class="row">
-                  			<div class="col-md-offset-3 col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                  			<div class="col-md-11 col-md-offset-1 col-sm-6 col-xs-12 form-group has-feedback">
                   				<div class="row">
                   					<form id="choose-date" action="" method="get">
-	                  					<div class="col-md-3" style="padding-left: 20px;padding-top: 10px;">
-	                  						<label for="date">Chọn ngày</label>
+	                  					<div class="row">
+		                  					<div class="col-md-3">
+		                  						<label for="date">Chọn ngày</label>
+		                  						<input type="date" value="<?=$date_selected?>" class="form-control has-feedback-left" name="date" id="date" autofocus="hidden" required="">
+					                        	<span class="fa fa-clock-o form-control-feedback left" aria-hidden="true"></span>
+		                  					</div>
+		                  					<div class="col-md-3">
+		                  						<label for="site">Chọn chi nhánh</label>
+		                  						<select name="site" id="site" class="form-control">
+													<option <?php echo (null == $site_selected) ? ' selected="selected"' : ''; ?> value="null">Tất cả chi nhánh</option>
+		                  							<?php foreach ($sites as $site) {?>
+		                  								<option <?php echo ($site['id'] == $site_selected) ? ' selected="selected"' : ''; ?> value="<?=$site['id']?>"><?=$site['location']?></option>
+		                  							<?php }?>
+		                  						</select>
+		                  					</div>
+		                  					<div class="col-md-3">
+		                  						<label for="status">Chọn chi nhánh</label>
+		                  						<select name="status" id="status" value="4" class="form-control">
+
+		                  							<?php foreach ($status as $key => $s) {?>
+		                  								<option <?php echo ($key == $status_selected) ? ' selected="selected"' : ''; ?> value="<?=$key?>"><?=$s?></option>
+		                  							<?php }?>
+		                  						</select>
+		                  					</div>
+		                  					<div class="col-md-3">
+		                  						<button style="margin-top: 22px;" type="submit" class="btn btn-info ">Xem báo cáo</button>
+		                  					</div>
 	                  					</div>
-	                  					<div class="col-md-7">
-	                  						<input type="date" value="<?=$date?>" class="form-control has-feedback-left" name="date" id="date" autofocus="hidden" required="">
-				                        	<span class="fa fa-clock-o form-control-feedback left" aria-hidden="true"></span>
-	                  					</div>
-	                  					<div class="col-md-2">
-	                  						<button type="submit" class="btn btn-info ">Xem báo cáo</button>
-	                  					</div>
+
 	                  				</form>
                   				</div>
+
 			                </div>
                   		</div>
                   		<div class="row" style="padding: 10px 0;"></div>
@@ -71,8 +92,6 @@ include_once 'views/layout/admin/header.php';
 										<a href="javascript:void(0)" slug-code="<?=$value['code']?>" class="open-detail btn btn-info" title="Xem chi tiết sản phẩm"><i class="fa fa-eye"></i></a>
 							        </td>
 						      	</tr>
-
-
 
 							<?php }?>
 	                      </tbody>
@@ -119,13 +138,20 @@ include_once 'views/layout/admin/header.php';
 include_once 'views/layout/admin/footer.php';
 ?>
 <script>
+	var host = '<?=$HOST?>';
+</script>
+<script>
 	$(document).ready(function () {
 		$('#order-in-date').dataTable({
 				  'order': [[ 1, 'desc' ]]
 				});
 		$('#choose-date').submit(function(e){
 			e.preventDefault();
-			window.location.replace('?mod=admin&act=order-in-date&date=' + $(this).find('input[type=date]').val());
+			window.location.replace('?mod=admin&act=order-in-date&date=' +
+				$(this).find('input[type=date]').val() +
+				'&site=' + $(this).find('select[name=site]').val() +
+				'&status=' + $(this).find('select[name=status]').val()
+				);
 		})
 		$(document).on('click', '.open-detail', function(){
 			var code = $(this).attr('slug-code');
@@ -143,7 +169,7 @@ include_once 'views/layout/admin/footer.php';
 							t1 += parseInt(b.quantity);
 							t2 += b.total_price;
 							$('#modal-detail tbody').append('<tr><td>'+b.name+'</td>'
-						        +'<td><div style="background-image: url('+b.image+'); width: 100px; height: 50px; background-repeat: no-repeat; background-position: center; background-size: cover;"></div></td>'
+						        +'<td><div style="background-image: url('+host+b.image+'); width: 100px; height: 50px; background-repeat: no-repeat; background-position: center; background-size: cover;"></div></td>'
 						        +'<td>'+b.quantity+'</td>'
 						        +'<td>'+fomatVND(b.total_price)+'</td></tr>');
 						})

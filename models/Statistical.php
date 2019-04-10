@@ -74,14 +74,14 @@ class Statistical {
 			$result[] = $row;
 
 		}
-
 		return $result;
 	}
 	function getListOrderByBook($code) {
-		$query = "select o.code, od.quantity * b.price as total_price, od.quantity, o.created_date, s.location
+		$query = "select o.code, c.name, od.quantity * b.price as total_price, od.quantity, o.created_date, s.location
 				from dbo.[book] b join dbo.[order_detail] od on od.book_id = b.id
 				join dbo.[order] o on o.code = od.order_code
 				join dbo.[site] s on s.id = o.site_id
+				left join dbo.[customer] c on c.id = o.customer_id
 				where b.code = '" . $code . "'";
 		$stmt = sqlsrv_query($this->statistical_conn, $query);
 		if ($stmt === false) {
@@ -95,11 +95,11 @@ class Statistical {
 		}
 		return $result;
 	}
-	function getListOrderByDate($date) {
+	function getListOrderByDate($date_selected, $site_selected, $status_selected) {
 		$query = "select o.code, o.created_date, s.location, sum(od.price * od.quantity) as total_price, sum(od.quantity) as total_quantity from dbo.[order] o
 				left join dbo.[site] s on o.site_id = s.id
 				inner join dbo.[order_detail] od on o.code = od.order_code
-				where CONVERT(DATE, o.created_date)  = '" . $date . "' and o.status = 4
+				where CONVERT(DATE, o.created_date)  = '" . $date_selected . "' and o.status = " . $status_selected . " and s.id = " . $site_selected . "
 				group  by o.code, o.status, o.created_date, s.location order by o.created_date desc";
 
 		$stmt = sqlsrv_query($this->statistical_conn, $query);

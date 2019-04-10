@@ -1,5 +1,6 @@
 <?php
 include_once 'views/layout/admin/header.php';
+include_once 'models/CONSTANT.php';
 ?>
 <div class="right_col" role="main" id="order-wait-section">
         <div class="">
@@ -49,7 +50,7 @@ include_once 'views/layout/admin/header.php';
 						    		<tr id="<?php echo $value['id']; ?>">
 					    			<td><?=$value['code']?></td>
 					    			<td><?=$value['name']?></td>
-							        <td><div style="background-image: url(<?=$value['image']?>); width: 100px; height: 100px; background-repeat: no-repeat; background-position: center; background-size: cover;"></div></td>
+							        <td><div style="background-image: url('<?php echo $HOST . $value['image']; ?>'); width: 100px; height: 100px; background-repeat: no-repeat; background-position: center; background-size: cover;"></div></td>
 							        <td><?=$value['price']?></td>
 							        <td><?=$value['total_count']?></td>
 							        <td><?=$value['total_quantity']?></td>
@@ -116,6 +117,7 @@ include_once 'views/layout/admin/header.php';
 		                        <tr>
 		                          	<th>Mã hóa đơn</th>
 		                          	<th>Ngày tạo</th>
+		                          	<th>Khách hàng</th>
 							        <th>Đã mua</th>
 							        <th>Tổng giá</th>
 							        <th>Chi nhánh</th>
@@ -139,6 +141,9 @@ include_once 'views/layout/admin/header.php';
 include_once 'views/layout/admin/footer.php';
 ?>
 <script>
+	var host = '<?=$HOST?>';
+</script>
+<script>
 	$(document).ready(function () {
 		$(document).on('click', '.open-detail', function(){
 			var code = $(this).attr('slug-code');
@@ -148,7 +153,7 @@ include_once 'views/layout/admin/footer.php';
 				success : function(res){
 					if(res){
 						var data = JSON.parse(res);
-						$('#modal-detail img').attr('src', data.book['image']);
+						$('#modal-detail img').attr('src', host + data.book['image']);
 						for (var key in data.book) {
 						    if (data.book.hasOwnProperty(key)) {
 						    	$('#modal-detail p[slug='+key+']').html(data.book[key]);
@@ -159,10 +164,12 @@ include_once 'views/layout/admin/footer.php';
 						var total = 0;
 						$('#modal-detail tbody').children().remove();
 						data.orders.forEach(function(od){
+							var cus_name = od.name ? od.name : 'Khách lẻ';
 							total += od.total_price;
 							$('#modal-detail tbody').append('<tr>'
 					    			+'<td>'+od.code+'</td>'
 					    			+'<td>'+od.created_date.date.split(' ')[0]+'</td>'
+					    			+'<td style="text-transform: capitalize;">'+cus_name+'</td>'
 							        +'<td>'+od.quantity+'</td>'
 							        +'<td>'+fomatVND(od.total_price)+'</td>'
 							        +'<td>'+od.location+'</td>'
