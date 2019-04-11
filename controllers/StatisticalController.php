@@ -48,6 +48,10 @@ class StatisticalController {
 		}
 		if (!isset($_GET['site'])) {
 			$site_selected = null;
+			if ($_SESSION['user']['rcode'] != 'ROLE_BOSS') {
+				$site_selected = $_SESSION['user']['site_id'];
+			}
+
 		} else {
 			$site_selected = $_GET['site'];
 		}
@@ -62,7 +66,8 @@ class StatisticalController {
 	}
 	public function getListOrderByBook() {
 		$book = $this->book_model->find($_GET['code']);
-		$oders = $this->statistical_model->getListOrderByBook($_GET['code']);
+		$site_id = $_SESSION['user']['rcode'] == 'ROLE_BOSS' ? 0 : $site_selected = $_SESSION['user']['site_id'];
+		$oders = $this->statistical_model->getListOrderByBook($_GET['code'], $site_id);
 		echo json_encode([
 			'book' => $book,
 			'orders' => $oders,

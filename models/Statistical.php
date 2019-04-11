@@ -76,13 +76,14 @@ class Statistical {
 		}
 		return $result;
 	}
-	function getListOrderByBook($code) {
+	function getListOrderByBook($code, $site_id) {
+		$s = $site_id == 0 ? '' : ' and o.site_id = ' . $site_id;
 		$query = "select o.code, c.name, od.quantity * b.price as total_price, od.quantity, o.created_date, s.location
 				from dbo.[book] b join dbo.[order_detail] od on od.book_id = b.id
 				join dbo.[order] o on o.code = od.order_code
 				join dbo.[site] s on s.id = o.site_id
 				left join dbo.[customer] c on c.id = o.customer_id
-				where b.code = '" . $code . "'";
+				where b.code = '" . $code . "' " . $s;
 		$stmt = sqlsrv_query($this->statistical_conn, $query);
 		if ($stmt === false) {
 			echo "Khong ton tai";

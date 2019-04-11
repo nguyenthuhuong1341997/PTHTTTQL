@@ -41,6 +41,9 @@ include_once 'models/CONSTANT.php';
 		                  						<input type="date" value="<?=$date_selected?>" class="form-control has-feedback-left" name="date" id="date" autofocus="hidden" required="">
 					                        	<span class="fa fa-clock-o form-control-feedback left" aria-hidden="true"></span>
 		                  					</div>
+		                  							                  					<?php
+if ($_SESSION['user']['rcode'] == 'ROLE_BOSS') {
+	?>
 		                  					<div class="col-md-3">
 		                  						<label for="site">Chọn chi nhánh</label>
 		                  						<select name="site" id="site" class="form-control">
@@ -50,8 +53,9 @@ include_once 'models/CONSTANT.php';
 		                  							<?php }?>
 		                  						</select>
 		                  					</div>
+<?php }?>
 		                  					<div class="col-md-3">
-		                  						<label for="status">Chọn chi nhánh</label>
+		                  						<label for="status">Chọn trạng thái</label>
 		                  						<select name="status" id="status" value="4" class="form-control">
 
 		                  							<?php foreach ($status as $key => $s) {?>
@@ -59,6 +63,7 @@ include_once 'models/CONSTANT.php';
 		                  							<?php }?>
 		                  						</select>
 		                  					</div>
+
 		                  					<div class="col-md-3">
 		                  						<button style="margin-top: 22px;" type="submit" class="btn btn-info ">Xem báo cáo</button>
 		                  					</div>
@@ -139,6 +144,7 @@ include_once 'views/layout/admin/footer.php';
 ?>
 <script>
 	var host = '<?=$HOST?>';
+	var role = '<?=$_SESSION["user"]["rcode"]?>';
 </script>
 <script>
 	$(document).ready(function () {
@@ -147,9 +153,10 @@ include_once 'views/layout/admin/footer.php';
 				});
 		$('#choose-date').submit(function(e){
 			e.preventDefault();
+			var s = role === 'ROLE_BOSS' ? '&site=' + $(this).find('select[name=site]').val() : '';
 			window.location.replace('?mod=admin&act=order-in-date&date=' +
 				$(this).find('input[type=date]').val() +
-				'&site=' + $(this).find('select[name=site]').val() +
+				s +
 				'&status=' + $(this).find('select[name=status]').val()
 				);
 		})
