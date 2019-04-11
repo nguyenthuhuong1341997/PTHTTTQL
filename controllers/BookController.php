@@ -52,8 +52,8 @@ class BookController {
 				if ($_FILES['image']['error'] > 0) {
 					echo "lỗi";
 				} else {
-					move_uploaded_file($_FILES['image']['tmp_name'], 'public/upload/' . $_FILES['image']['name']);
-					$st = 'public/upload/' . $_FILES['image']['name'];
+					move_uploaded_file($_FILES['image']['tmp_name'], '../upload/' . $_FILES['image']['name']);
+					$st = $_FILES['image']['name'];
 					$data['image'] = $st;
 				}
 			} else {
@@ -93,8 +93,8 @@ class BookController {
 			if ($_FILES['image']['error'] > 0) {
 				echo "lỗi";
 			} else {
-				move_uploaded_file($_FILES['image']['tmp_name'], 'public/upload/' . $_FILES['image']['name']);
-				$st = 'public/upload/' . $_FILES['image']['name'];
+				move_uploaded_file($_FILES['image']['tmp_name'], '../upload/' . $_FILES['image']['name']);
+				$st = $_FILES['image']['name'];
 				$data['image'] = $st;
 			}
 		}

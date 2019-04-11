@@ -103,6 +103,7 @@ class Book {
 
 	function delete($code) {
 		$query = "DELETE FROM [dbo].[book] WHERE code='" . $code . "'";
+		echo $query;
 		$result = sqlsrv_query($this->book_conn, $query);
 		return $result;
 	}
