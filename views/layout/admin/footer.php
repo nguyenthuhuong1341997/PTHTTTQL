@@ -1,6 +1,6 @@
         <!-- footer content -->
         <footer>
-          
+
           <div class="clearfix"></div>
         </footer>
         <!-- /footer content -->
@@ -35,11 +35,11 @@
     <script src="public/admin/vendors/pdfmake/build/vfs_fonts.js"></script>
 
     <!-- Custom Theme Scripts -->
-    
+
     <!-- bootstrap-daterangepicker -->
     <script src="public/admin/vendors/moment/min/moment.min.js"></script>
     <script src="public/admin/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-    <!-- bootstrap-datetimepicker -->    
+    <!-- bootstrap-datetimepicker -->
     <script src="public/admin/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
     <!-- Ion.RangeSlider -->
     <script src="public/admin/vendors/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
@@ -52,22 +52,22 @@
     <!-- Cropper -->
     <script src="public/admin/vendors/cropper/dist/cropper.min.js"></script>
     <script src="public/admin/build/js/custom.js"></script>
-    
+
     <!-- jQuery Smart Wizard -->
     <script src="public/admin/vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
     <script type="text/javascript">
         $('#wait-order-table').dataTable({
-
-        });
+                  'order': [[ 4, 'desc' ]]
+                });
         $('#order-complete-table').dataTable( {
         } );
         $('#order-delivery-table').dataTable({
 
         });
     </script>
-    
+
     <script type="text/javascript " src="public/admin/js/toastr.min.js"></script>
-    
+
 
   </body>
 </html>
