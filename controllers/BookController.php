@@ -42,6 +42,7 @@ class BookController {
 
 	function store() {
 		$data = $_POST;
+
 		$data['description'] = strip_tags($data['description']);
 		$book = $this->book_model->find($data['code']);
 		if ($book != null) {

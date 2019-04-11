@@ -207,10 +207,13 @@ include_once 'views/layout/admin/footer.php';
   $(document).ready(function () {
     $('#create-book').submit(function(e){
       e.preventDefault();
+       var formData = new FormData($(this)[0]);
       $.ajax({
         url : $(this).attr('action'),
         type : $(this).attr('method'),
-        data : $(this).serialize(),
+        data : formData,
+        processData: false,
+        contentType: false,
         success : function(res) {
           if(JSON.parse(res) === false) {
             toastr.error("Mã sách đã tồn tại!");

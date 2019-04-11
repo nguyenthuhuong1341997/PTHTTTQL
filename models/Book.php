@@ -98,6 +98,7 @@ class Book {
 	function update($data) {
 		$query = "UPDATE [dbo].[book] SET name=N'" . $data['name'] . "',price=" . $data['price'] . ",type_id=" . $data['type'] . ",author_id=" . $data['author'] . ",publisher_id=" . $data['publisher'] . ",image='" . $data['image'] . "',description=N'" . $data['description'] . "' WHERE code='" . $data['code'] . "'";
 		$result = sqlsrv_query($this->book_conn, $query);
+		echo $query;
 		return $result;
 	}
 
