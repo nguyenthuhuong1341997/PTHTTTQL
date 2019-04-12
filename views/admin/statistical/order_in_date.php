@@ -80,8 +80,10 @@ if ($_SESSION['user']['rcode'] == 'ROLE_BOSS') {
 		                        <tr>
 		                          	<th>Mã hóa đơn</th>
 		                          	<th>Ngày tạo</th>
+		                          	<th>Khách hàng</th>
 							        <th>Số lượng bán</th>
 							        <th>Tổng tiền</th>
+							        <th>Hình thức</th>
 							        <th>Chi nhánh</th>
 							        <th>Hành động</th>
 		                        </tr>
@@ -90,8 +92,10 @@ if ($_SESSION['user']['rcode'] == 'ROLE_BOSS') {
 	                        <?php foreach ($orders as $key => $value) {?>
 					    			<td><?=$value['code']?></td>
 					    			<td><?=$value['created_date']->format('Y-m-d H:i:s')?></td>
+					    			<td><?=$value['name'] == null ? 'Khách lẻ' : $value['name']?></td>
 							        <td><?=$value['total_quantity']?></td>
 							        <td><?php echo number_format($value['total_price'], 0) . "&nbsp;₫"; ?></td>
+							        <td><?=$value['sale_type'] == 1 ? 'Đặt hàng trực tiếp' : 'Mua hàng trên mạng'?></td>
 							        <td><?=$value['location']?></td>
 							        <td>
 										<a href="javascript:void(0)" slug-code="<?=$value['code']?>" class="open-detail btn btn-info" title="Xem chi tiết sản phẩm"><i class="fa fa-eye"></i></a>

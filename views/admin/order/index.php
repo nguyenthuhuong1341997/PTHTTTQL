@@ -1,5 +1,5 @@
-<?php 
-	include_once 'views/layout/admin/header.php';
+<?php
+include_once 'views/layout/admin/header.php';
 ?>
 <div class="right_col" role="main" id="order-wait-section">
         <div class="">
@@ -65,24 +65,24 @@
 		                    <tbody>
 		                      	<?php foreach ($orders as $order): ?>
 							    	<tr id="<?php echo $order['id']; ?>">
-							    		<td><input class="checkbox-working-day" value="<?=$order['id']  ?>" type="checkbox" /></td>
-						    			<td><?=$order['code']  ?></td>
-						    			<td><?=$order['customer_name']  ?></td>
-								        <td><?=$order['site_name']  ?></td>
+							    		<td><input class="checkbox-working-day" value="<?=$order['id']?>" type="checkbox" /></td>
+						    			<td><?=$order['code']?></td>
+						    			<td><?=$order['customer_name']?></td>
+								        <td><?=$order['site_name']?></td>
 								        <td>
-								        	<?php $total = 0; foreach ($order['detail'] as $detail) : ?>
-								        		<span><?= $detail['quantity'] ?> <?= $detail['book_name'] ?> </span> <br/>
-								        			<?php $total += $detail['quantity']*$detail['book_price'] ?>
-								        	<?php endforeach ?>
+								        	<?php $total = 0;foreach ($order['detail'] as $detail): ?>
+								        		<span><?=$detail['quantity']?> <?=$detail['book_name']?> </span> <br/>
+								        			<?php $total += $detail['quantity'] * $detail['book_price']?>
+								        	<?php endforeach?>
 								        </td>
-								        <td><?php echo $total; ?></td>
+								        <td><?php echo number_format($total, 0) . "&nbsp;₫"; ?></td>
 								        <td>
-											<a href="?mod=admin&act=order&action=confirmDelivery&id=<?= $order['code']?>" class="btn btn-info" title="Giao hàng" ><i class="fa fa-check"></i></a>
+											<a href="?mod=admin&act=order&action=confirmDelivery&id=<?=$order['code']?>" class="btn btn-info" title="Giao hàng" ><i class="fa fa-check"></i></a>
 											<a class="btn btn-warning" title="Chỉnh sửa đơn hàng" ><i class="fa  fa-wrench"></i></a>
-											<a href="?mod=admin&act=order&action=cancelDelivery&id=<?= $order['code']?>" class="btn btn-danger delete" title="Hủy đơn hàng"><i class="fa fa-close"></i></a>
+											<a href="?mod=admin&act=order&action=cancelDelivery&id=<?=$order['code']?>" class="btn btn-danger delete" title="Hủy đơn hàng"><i class="fa fa-close"></i></a>
 								        </td>
-							      	</tr>			
-								<?php endforeach ?>
+							      	</tr>
+								<?php endforeach?>
 		                    </tbody>
 	                    </table>
                   	</div>
@@ -119,7 +119,7 @@
                     	<div class="clearfix"></div>
                   	</div>
                   	<div class="x_content">
-	                  	
+
 	                    <table id="order-delivery-table" class="table table-striped table-bordered">
 	                      	<thead>
 		                        <tr>
@@ -135,23 +135,23 @@
 		                    <tbody>
 		                      	<?php foreach ($waitOrders as $waitOrder): ?>
 							    	<tr id="<?php echo $waitOrder['id']; ?>">
-							    		<td><input class="checkbox-working-day" value="<?=$waitOrder['id']  ?>" type="checkbox" /></td>
-						    			<td><?=$waitOrder['code']  ?></td>
-						    			<td><?=$waitOrder['customer_name']  ?></td>
-								        <td><?=$waitOrder['site_name']  ?></td>
+							    		<td><input class="checkbox-working-day" value="<?=$waitOrder['id']?>" type="checkbox" /></td>
+						    			<td><?=$waitOrder['code']?></td>
+						    			<td><?=$waitOrder['customer_name']?></td>
+								        <td><?=$waitOrder['site_name']?></td>
 								        <td>
-								        	<?php $total = 0; foreach ($waitOrder['detail'] as $detail) : ?>
-								        		<span><?= $detail['quantity'] ?> quyển <?= $detail['book_name'] ?> </span>
-								        			<?php $total += $detail['quantity']*$detail['book_price'] ?> <br/>
-								        	<?php endforeach ?>
+								        	<?php $total = 0;foreach ($waitOrder['detail'] as $detail): ?>
+								        		<span><?=$detail['quantity']?> quyển <?=$detail['book_name']?> </span>
+								        			<?php $total += $detail['quantity'] * $detail['book_price']?> <br/>
+								        	<?php endforeach?>
 								        </td>
 								        <td><?php echo $total; ?></td>
 								        <td>
-											<a href="?mod=admin&act=order&action=confirmComplete&id=<?= $waitOrder['code']?>" class="btn btn-success" title="Hoàn thành" ><i class="fa fa-check"></i></a>
-											<a href="?mod=admin&act=order&action=cancelDelivery&id=<?= $waitOrder['code']?>" class="btn btn-danger delete" title="Hủy đơn hàng"><i class="fa fa-close"></i></a>
+											<a href="?mod=admin&act=order&action=confirmComplete&id=<?=$waitOrder['code']?>" class="btn btn-success" title="Hoàn thành" ><i class="fa fa-check"></i></a>
+											<a href="?mod=admin&act=order&action=cancelDelivery&id=<?=$waitOrder['code']?>" class="btn btn-danger delete" title="Hủy đơn hàng"><i class="fa fa-close"></i></a>
 								        </td>
-							      	</tr>			
-								<?php endforeach ?>
+							      	</tr>
+								<?php endforeach?>
 		                    </tbody>
 	                    </table>
                   	</div>
@@ -202,19 +202,19 @@
 		                    <tbody>
 		                      	<?php foreach ($completeOrders as $completeOrder): ?>
 							    	<tr id="<?php echo $completeOrder['id']; ?>">
-							    		<td><input class="checkbox-working-day" value="<?=$completeOrder['id']  ?>" type="checkbox" /></td>
-						    			<td><?=$completeOrder['code']  ?></td>
-						    			<td><?=$completeOrder['customer_name']  ?></td>
-								        <td><?=$completeOrder['site_name']  ?></td>
+							    		<td><input class="checkbox-working-day" value="<?=$completeOrder['id']?>" type="checkbox" /></td>
+						    			<td><?=$completeOrder['code']?></td>
+						    			<td><?=$completeOrder['customer_name']?></td>
+								        <td><?=$completeOrder['site_name']?></td>
 								        <td>
-								        	<?php $total = 0; foreach ($completeOrder['detail'] as $detail) : ?>
-								        		<span><?= $detail['quantity'] ?> quyển <?= $detail['book_name'] ?> </span>
-								        			<?php $total += $detail['quantity']*$detail['book_price'] ?> <br/>
-								        	<?php endforeach ?>
+								        	<?php $total = 0;foreach ($completeOrder['detail'] as $detail): ?>
+								        		<span><?=$detail['quantity']?> quyển <?=$detail['book_name']?> </span>
+								        			<?php $total += $detail['quantity'] * $detail['book_price']?> <br/>
+								        	<?php endforeach?>
 								        </td>
 								        <td><?php echo $total; ?></td>
-							      	</tr>			
-								<?php endforeach ?>
+							      	</tr>
+								<?php endforeach?>
 		                    </tbody>
 	                    </table>
                   	</div>
@@ -223,32 +223,32 @@
             </div>
         </div>
 </div>
-<?php 
-	include_once 'views/layout/admin/footer.php';
+<?php
+include_once 'views/layout/admin/footer.php';
 ?>
 
-<?php 
-	if (isset($_COOKIE['updateStatusConfirmDeliverySuccess'])) {
-		echo '<script type="text/javascript">toastr.success("Đơn hàng đang được giao");toastr.options.timeOut = 30000;</script>';
-	}
+<?php
+if (isset($_COOKIE['updateStatusConfirmDeliverySuccess'])) {
+	echo '<script type="text/javascript">toastr.success("Đơn hàng đang được giao");toastr.options.timeOut = 30000;</script>';
+}
 
-	if (isset($_COOKIE['updateStatusConfirmDeliveryFail'])) {
-		echo '<script type="text/javascript">toastr.error("Đơn hàng chưa được giao!", "Lỗi!");</script>';
-	}
+if (isset($_COOKIE['updateStatusConfirmDeliveryFail'])) {
+	echo '<script type="text/javascript">toastr.error("Đơn hàng chưa được giao!", "Lỗi!");</script>';
+}
 
-	if (isset($_COOKIE['updateStatusCompleteDeliverySuccess'])) {
-		echo '<script type="text/javascript">toastr.success("Đơn hàng đã hoàn thành");toastr.options.timeOut = 30000;</script>';
-	}
+if (isset($_COOKIE['updateStatusCompleteDeliverySuccess'])) {
+	echo '<script type="text/javascript">toastr.success("Đơn hàng đã hoàn thành");toastr.options.timeOut = 30000;</script>';
+}
 
-	if (isset($_COOKIE['updateStatusCompleteDeliveryFail'])) {
-		echo '<script type="text/javascript">toastr.error("Đơn hàng chưa được hoàn thành!", "Lỗi!");</script>';
-	}
+if (isset($_COOKIE['updateStatusCompleteDeliveryFail'])) {
+	echo '<script type="text/javascript">toastr.error("Đơn hàng chưa được hoàn thành!", "Lỗi!");</script>';
+}
 
-	if (isset($_COOKIE['cancelDeliverySuccess'])) {
-		echo '<script type="text/javascript">toastr.error("Hủy đơn hàng thành công");toastr.options.timeOut = 30000;</script>';
-	}
+if (isset($_COOKIE['cancelDeliverySuccess'])) {
+	echo '<script type="text/javascript">toastr.error("Hủy đơn hàng thành công");toastr.options.timeOut = 30000;</script>';
+}
 
-	if (isset($_COOKIE['cancelDeliveryFail'])) {
-		echo '<script type="text/javascript">toastr.error("Đơn hàng chưa được hủy!", "Lỗi!");</script>';
-	}
+if (isset($_COOKIE['cancelDeliveryFail'])) {
+	echo '<script type="text/javascript">toastr.error("Đơn hàng chưa được hủy!", "Lỗi!");</script>';
+}
 ?>

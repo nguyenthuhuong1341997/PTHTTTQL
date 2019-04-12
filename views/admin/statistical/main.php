@@ -51,7 +51,7 @@ include_once 'models/CONSTANT.php';
 					    			<td><?=$value['code']?></td>
 					    			<td><?=$value['name']?></td>
 							        <td><div style="background-image: url('<?php echo $HOST . $value['image']; ?>'); width: 100px; height: 100px; background-repeat: no-repeat; background-position: center; background-size: cover;"></div></td>
-							        <td><?=$value['price']?></td>
+							        <td><?php echo number_format($value['price'], 0) . "&nbsp;₫"; ?></td>
 							        <td><?=$value['total_count']?></td>
 							        <td><?=$value['total_quantity']?></td>
 							        <td>

@@ -11,8 +11,10 @@ $(document).ready(function () {
 					$('#modal-detail img').attr('src', data.book['image']);
 					for (var key in data.book) {
 					    if (data.book.hasOwnProperty(key)) {
-					    	console.log(key);
 					    	$('#modal-detail p[slug='+key+']').html(data.book[key]);
+					    	if(key === 'price'){
+					    		$('#modal-detail p[slug='+key+']').html(fomatVND(data.book[key]));
+					    	}
 					    }
 					}
 					data.site_book.forEach(function(sb){
@@ -53,4 +55,7 @@ $(document).ready(function () {
 		  	}
 		});    	
 	});
+	function fomatVND(input) {
+        return input.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+    }
 })

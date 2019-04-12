@@ -98,12 +98,13 @@ class Statistical {
 	}
 	function getListOrderByDate($date_selected, $site_selected, $status_selected) {
 		$sitex = ($site_selected == null) || ($site_selected == 'null') ? '' : ' and s.id = ' . $site_selected;
-		$query = "select o.code, o.created_date, s.location, sum(od.price * od.quantity) as total_price, sum(od.quantity) as total_quantity from dbo.[order] o
+		$query = "select o.code, o.sale_type, c.name, o.created_date, s.location, sum(od.price * od.quantity) as total_price, sum(od.quantity) as total_quantity from dbo.[order] o
 			left join dbo.[site] s on o.site_id = s.id
+			left join dbo.[customer] c on o.customer_id = c.id
 			inner join dbo.[order_detail] od on o.code = od.order_code
 			where CONVERT(DATE, o.created_date)  = '" . $date_selected . "' and o.status = " . $status_selected .
 			$sitex .
-			" group  by o.code, o.status, o.created_date, s.location order by o.created_date desc";
+			" group  by o.code, o.sale_type, o.status, o.created_date, s.location, c.name order by o.created_date desc";
 		$stmt = sqlsrv_query($this->statistical_conn, $query);
 		if ($stmt === false) {
 			echo "Khong ton tai";
