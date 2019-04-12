@@ -177,7 +177,8 @@ include_once 'models/CONSTANT.php';
           </div>
         </div>
 <script type="text/javascript">
-	var bookqan = <?php echo json_encode($books) ?>
+	var bookqan = <?php echo json_encode($books) ?>;
+	var host = '<?=$HOST?>';
 </script>
 <?php
 include_once 'views/layout/admin/footer.php';

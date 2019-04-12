@@ -8,7 +8,7 @@ $(document).ready(function () {
 			success : function(res){
 				if(res){
 					var data = JSON.parse(res);
-					$('#modal-detail img').attr('src', data.book['image']);
+					$('#modal-detail img').attr('src', host + data.book['image']);
 					for (var key in data.book) {
 					    if (data.book.hasOwnProperty(key)) {
 					    	$('#modal-detail p[slug='+key+']').html(data.book[key]);
