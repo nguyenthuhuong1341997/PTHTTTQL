@@ -27,7 +27,7 @@ include_once 'models/CONSTANT.php';
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   	<div class="x_title">
-	                    <h2>Danh sách hóa đơn bán trong ngày: <b><?=$date_selected?></b></h2>
+	                    <h2>Danh sách hóa đơn bán ngày: <b><?=$from?></b> => <b><?=$to?></b></h2>
                     	<div class="clearfix"></div>
                   	</div>
                   	<div class="x_content">
@@ -37,9 +37,16 @@ include_once 'models/CONSTANT.php';
                   					<form id="choose-date" action="" method="get">
 	                  					<div class="row">
 		                  					<div class="col-md-3">
-		                  						<label for="date">Chọn ngày</label>
-		                  						<input type="date" value="<?=$date_selected?>" class="form-control has-feedback-left" name="date" id="date" autofocus="hidden" required="">
-					                        	<span class="fa fa-clock-o form-control-feedback left" aria-hidden="true"></span>
+		                  						<div class="row">
+		                  							<label for="date">Từ ngày</label>
+			                  						<input type="date" value="<?=$from?>" class="form-control has-feedback-left" name="from" id="date" autofocus="hidden" required="">
+
+		                  						</div>
+		                  						<div class="row">
+		                  							<label for="date2">Đến ngày</label>
+			                  						<input type="date" value="<?=$to?>" class="form-control has-feedback-left" name="to" id="date2" autofocus="hidden" required="">
+
+		                  						</div>
 		                  					</div>
 		                  							                  					<?php
 if ($_SESSION['user']['rcode'] == 'ROLE_BOSS') {
@@ -158,8 +165,8 @@ include_once 'views/layout/admin/footer.php';
 		$('#choose-date').submit(function(e){
 			e.preventDefault();
 			var s = role === 'ROLE_BOSS' ? '&site=' + $(this).find('select[name=site]').val() : '';
-			window.location.replace('?mod=admin&act=order-in-date&date=' +
-				$(this).find('input[type=date]').val() +
+			window.location.replace('?mod=admin&act=order-in-date&from=' +
+				$(this).find('input[name=from]').val() + '&to=' + $(this).find('input[name=to]').val() +
 				s +
 				'&status=' + $(this).find('select[name=status]').val()
 				);

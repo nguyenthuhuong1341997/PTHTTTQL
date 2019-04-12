@@ -59,10 +59,13 @@ class Statistical {
 		return $result;
 	}
 	function getTopSale() {
-		$query = "select b.code, b.name, CAST(b.[image] AS NVARCHAR(1000)) as image, b.price, sum(od.quantity) as total_quantity, count(b.code) as total_count from dbo.[order] o
+		$s = $_SESSION['user']['rcode'] != 'ROLE_BOSS' ? 'where o.site_id = ' . $_SESSION['user']['site_id'] : '';
+		$query = "select b.code, b.name, CAST(b.[image] AS NVARCHAR(1000)) as image, b.price, sum(od.quantity) as total_quantity, count(b.code) as total_count, o.site_id
+			from dbo.[order] o
 			join dbo.[order_detail] od on od.order_code = o.code
 			join dbo.[book] b on od.book_id = b.id
-			group by b.code, b.name, CAST(b.[image] AS NVARCHAR(1000)), b.price order by total_count desc, total_quantity desc";
+			" . $s . "
+			group by b.code, b.name, CAST(b.[image] AS NVARCHAR(1000)), b.price, o.site_id order by total_count desc, total_quantity desc";
 
 		$stmt = sqlsrv_query($this->statistical_conn, $query);
 		if ($stmt === false) {
@@ -96,15 +99,16 @@ class Statistical {
 		}
 		return $result;
 	}
-	function getListOrderByDate($date_selected, $site_selected, $status_selected) {
+	function getListOrderByDate($from, $to, $site_selected, $status_selected) {
 		$sitex = ($site_selected == null) || ($site_selected == 'null') ? '' : ' and s.id = ' . $site_selected;
 		$query = "select o.code, o.sale_type, c.name, o.created_date, s.location, sum(od.price * od.quantity) as total_price, sum(od.quantity) as total_quantity from dbo.[order] o
 			left join dbo.[site] s on o.site_id = s.id
 			left join dbo.[customer] c on o.customer_id = c.id
 			inner join dbo.[order_detail] od on o.code = od.order_code
-			where CONVERT(DATE, o.created_date)  = '" . $date_selected . "' and o.status = " . $status_selected .
+			where CONVERT(DATE, o.created_date) >= '" . $from . "' and CONVERT(DATE, o.created_date) <= '" . $to . "' and o.status = " . $status_selected .
 			$sitex .
 			" group  by o.code, o.sale_type, o.status, o.created_date, s.location, c.name order by o.created_date desc";
+
 		$stmt = sqlsrv_query($this->statistical_conn, $query);
 		if ($stmt === false) {
 			echo "Khong ton tai";

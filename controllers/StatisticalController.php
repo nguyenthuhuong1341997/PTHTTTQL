@@ -41,10 +41,15 @@ class StatisticalController {
 		require_once 'views/admin/statistical/main.php';
 	}
 	public function orderInDate() {
-		if (!isset($_GET['date'])) {
-			$date_selected = date('Y-m-d');
+		if (!isset($_GET['from'])) {
+			$from = date('Y-m-d');
 		} else {
-			$date_selected = $_GET['date'];
+			$from = $_GET['from'];
+		}
+		if (!isset($_GET['to'])) {
+			$to = date('Y-m-d');
+		} else {
+			$to = $_GET['to'];
 		}
 		if (!isset($_GET['site'])) {
 			$site_selected = null;
@@ -61,7 +66,7 @@ class StatisticalController {
 			$status_selected = $_GET['status'];
 		}
 		$sites = $this->site_model->list();
-		$orders = $this->statistical_model->getListOrderByDate($date_selected, $site_selected, $status_selected);
+		$orders = $this->statistical_model->getListOrderByDate($from, $to, $site_selected, $status_selected);
 		require_once 'views/admin/statistical/order_in_date.php';
 	}
 	public function getListOrderByBook() {
