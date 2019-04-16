@@ -31,6 +31,8 @@ case 'admin':{
 		$user = new UserController();
 		include_once 'controllers/StatisticalController.php';
 		$statistical = new StatisticalController();
+		include_once 'controllers/CustomerController.php';
+		$customer = new CustomerController();
 		if (isset($_SESSION['user'])) {
 			$current_user = $_SESSION['user'];
 		} else {
@@ -68,6 +70,32 @@ case 'admin':{
 			} else {
 				header("location: ?mod=admin");
 			}
+			break;
+		case 'customer':
+			switch ($action) {
+			case '':
+				$customer->index();
+				break;
+			case 'create':
+				$customer->create();
+				break;
+			case 'store':
+				$customer->store();
+				break;
+			case 'edit':
+				$customer->edit();
+				break;
+			case 'update':
+				$customer->update();
+				break;
+			case 'delete':
+				$customer->delete();
+				break;
+			default:
+				# code...
+				break;
+			}
+
 			break;
 		case 'book':
 			if ($current_user['rcode'] == 'ROLE_BOSS' || $current_user['rcode'] == 'ROLE_ADMIN') {

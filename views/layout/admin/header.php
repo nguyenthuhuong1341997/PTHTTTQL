@@ -77,6 +77,17 @@ if ($_SESSION['user']['rcode'] == 'ROLE_BOSS') {
                                     <?php
 if ($_SESSION['user']['rcode'] == 'ROLE_BOSS' || $_SESSION['user']['rcode'] == 'ROLE_ADMIN') {
 	?>
+<li <?php if (isset($_GET['act'])) {
+		if ($_GET['act'] == 'customer') {echo 'class="active"';}
+	}
+	?>>
+  <a href="?mod=admin&act=customer"><i class="fa fa-users"></i> Quản lý khách hàng</a>
+
+      </li>
+      <?php }?>
+                                    <?php
+if ($_SESSION['user']['rcode'] == 'ROLE_BOSS' || $_SESSION['user']['rcode'] == 'ROLE_ADMIN') {
+	?>
                   <li <?php if (isset($_GET['act'])) {
 		if ($_GET['act'] == 'book') {echo 'class="active"';}
 	}
@@ -106,7 +117,17 @@ if ($_SESSION['user']['rcode'] == 'ROLE_BOSS' || $_SESSION['user']['rcode'] == '
 }
 ?>>
   <a href="?mod=admin&act=order-in-date"><i class="fa fa-line-chart"></i> Báo cáo ngày</a>
+
       </li>
+ <?php
+if ($_SESSION['user']['rcode'] == 'ROLE_BOSS') {
+	?>
+                  <li <?php if (isset($_GET['act'])) {
+		if ($_GET['act'] == 'statistical-staff') {echo 'class="active"';}
+	}
+	?> ><a href="?mod=admin&act=statistical-staff"><i class="fa fa-line-chart"></i> Thống kê theo nhân viên</a>
+                  </li>
+                  <?php }?>
                 </ul>
               </div>
 
