@@ -130,5 +130,38 @@ class Statistical {
 		}
 		return $data;
 	}
+	function statisticalStaff() {
+		$sql = "select x.created_by, u.name, u.username, count(x.created_by) as total_order, sum(x.total_price) as total_price,
+			sum(x.total_quantity) as total_quantity, sum(x.total_book) as total_book, s.location from
+			(
+			select o.code, o.created_by, sum(od.quantity*od.price) as total_price, sum(od.quantity) as total_quantity, count(od.book_id) as total_book
+			from dbo.[order] o inner join dbo.[order_detail] od on od.order_code = o.code
+			group by o.code, o.created_by
+			) as x
+			join dbo.[user] u on u.id = x.created_by
+			join dbo.[site] s on s.id = u.site_id
+			where x.created_by is not null group by x.created_by, u.name, u.username, s.location";
+		$stmt = sqlsrv_query($this->statistical_conn, $sql);
+		$data = array();
+		while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
+	function getOrdersByUser($username) {
+		$sql = "select o.code, u.username, o.sale_type, c.name, o.created_date, s.location, sum(od.price * od.quantity) as total_price, sum(od.quantity) as total_quantity from dbo.[order] o
+			left join dbo.[site] s on o.site_id = s.id
+			left join dbo.[customer] c on o.customer_id = c.id
+			inner join dbo.[order_detail] od on o.code = od.order_code
+			inner join dbo.[user] u on u.id = o.created_by
+			where u.username = '" . $username . "'
+			group  by o.code, o.sale_type, o.status, o.created_date, s.location, c.name, u.username order by o.created_date desc";
+		$stmt = sqlsrv_query($this->statistical_conn, $sql);
+		$data = array();
+		while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+			$data[] = $row;
+		}
+		return $data;
+	}
 }
 ?>

@@ -53,8 +53,8 @@ include_once 'views/layout/admin/header.php';
 	                    <table id="wait-order-table" class="table table-striped table-bordered">
 	                      	<thead>
 		                        <tr>
-		                        	<th><input type="checkbox" onclick="toggle(this);" /></th>
 		                          	<th>Mã đơn hàng</th>
+		                          	<th>Ngày tạo</th>
 		                          	<th>Tên khách hàng</th>
 							        <th>Chi nhánh</th>
 							        <th>Giỏ hàng</th>
@@ -65,8 +65,9 @@ include_once 'views/layout/admin/header.php';
 		                    <tbody>
 		                      	<?php foreach ($orders as $order): ?>
 							    	<tr id="<?php echo $order['id']; ?>">
-							    		<td><input class="checkbox-working-day" value="<?=$order['id']?>" type="checkbox" /></td>
+
 						    			<td><?=$order['code']?></td>
+						    			<td><?=$order['created_date']->format('Y-m-d H:i:s')?></td>
 						    			<td><?=$order['customer_name']?></td>
 								        <td><?=$order['site_name']?></td>
 								        <td>
@@ -79,7 +80,7 @@ include_once 'views/layout/admin/header.php';
 								        <td>
 											<a href="?mod=admin&act=order&action=confirmDelivery&id=<?=$order['code']?>" class="btn btn-info" title="Giao hàng" ><i class="fa fa-check"></i></a>
 											<a class="btn btn-warning" title="Chỉnh sửa đơn hàng" ><i class="fa  fa-wrench"></i></a>
-											<a href="?mod=admin&act=order&action=cancelDelivery&id=<?=$order['code']?>" class="btn btn-danger delete" title="Hủy đơn hàng"><i class="fa fa-close"></i></a>
+											<a href="?mod=admin&act=order&action=cancelDelivery&id=<?=$order['code']?>" class="btn btn-danger delete" title="Hủy đơn hàng"><i class="fa fa-trash"></i></a>
 								        </td>
 							      	</tr>
 								<?php endforeach?>
@@ -123,8 +124,8 @@ include_once 'views/layout/admin/header.php';
 	                    <table id="order-delivery-table" class="table table-striped table-bordered">
 	                      	<thead>
 		                        <tr>
-		                        	<th><input type="checkbox" onclick="toggle(this);" /></th>
 		                          	<th>Mã đơn hàng</th>
+		                          	<th>Ngày tạo</th>
 		                          	<th>Tên khách hàng</th>
 							        <th>Chi nhánh</th>
 							        <th>Giỏ hàng</th>
@@ -135,8 +136,8 @@ include_once 'views/layout/admin/header.php';
 		                    <tbody>
 		                      	<?php foreach ($waitOrders as $waitOrder): ?>
 							    	<tr id="<?php echo $waitOrder['id']; ?>">
-							    		<td><input class="checkbox-working-day" value="<?=$waitOrder['id']?>" type="checkbox" /></td>
 						    			<td><?=$waitOrder['code']?></td>
+						    			<td><?=$waitOrder['created_date']->format('Y-m-d H:i:s')?></td>
 						    			<td><?=$waitOrder['customer_name']?></td>
 								        <td><?=$waitOrder['site_name']?></td>
 								        <td>
@@ -145,10 +146,11 @@ include_once 'views/layout/admin/header.php';
 								        			<?php $total += $detail['quantity'] * $detail['book_price']?> <br/>
 								        	<?php endforeach?>
 								        </td>
-								        <td><?php echo $total; ?></td>
+								        <td><?php echo number_format($total, 0) . "&nbsp;₫"; ?></td>
 								        <td>
 											<a href="?mod=admin&act=order&action=confirmComplete&id=<?=$waitOrder['code']?>" class="btn btn-success" title="Hoàn thành" ><i class="fa fa-check"></i></a>
-											<a href="?mod=admin&act=order&action=cancelDelivery&id=<?=$waitOrder['code']?>" class="btn btn-danger delete" title="Hủy đơn hàng"><i class="fa fa-close"></i></a>
+											<a href="?mod=admin&act=order&action=backToOrder&id=<?=$waitOrder['code']?>" class="btn btn-danger delete" title="Quay lại"><i class="fa fa-close"></i></a>
+											<a href="?mod=admin&act=order&action=cancelDelivery&id=<?=$waitOrder['code']?>" class="btn btn-danger delete" title="Hủy đơn hàng"><i class="fa fa-trash"></i></a>
 								        </td>
 							      	</tr>
 								<?php endforeach?>
@@ -191,8 +193,8 @@ include_once 'views/layout/admin/header.php';
 	                    <table id="order-complete-table" class="table table-striped table-bordered">
 	                      	<thead>
 		                        <tr>
-		                        	<th><input type="checkbox" onclick="toggle(this);" /></th>
 		                          	<th>Mã đơn hàng</th>
+		                          	<th>Ngày tạo</th>
 		                          	<th>Tên khách hàng</th>
 							        <th>Chi nhánh</th>
 							        <th>Giỏ hàng</th>
@@ -202,8 +204,9 @@ include_once 'views/layout/admin/header.php';
 		                    <tbody>
 		                      	<?php foreach ($completeOrders as $completeOrder): ?>
 							    	<tr id="<?php echo $completeOrder['id']; ?>">
-							    		<td><input class="checkbox-working-day" value="<?=$completeOrder['id']?>" type="checkbox" /></td>
+
 						    			<td><?=$completeOrder['code']?></td>
+						    			<td><?=$completeOrder['created_date']->format('Y-m-d H:i:s')?></td>
 						    			<td><?=$completeOrder['customer_name']?></td>
 								        <td><?=$completeOrder['site_name']?></td>
 								        <td>
@@ -212,7 +215,7 @@ include_once 'views/layout/admin/header.php';
 								        			<?php $total += $detail['quantity'] * $detail['book_price']?> <br/>
 								        	<?php endforeach?>
 								        </td>
-								        <td><?php echo $total; ?></td>
+								        <td><?php echo number_format($total, 0) . "&nbsp;₫"; ?></td>
 							      	</tr>
 								<?php endforeach?>
 		                    </tbody>
@@ -250,5 +253,9 @@ if (isset($_COOKIE['cancelDeliverySuccess'])) {
 
 if (isset($_COOKIE['cancelDeliveryFail'])) {
 	echo '<script type="text/javascript">toastr.error("Đơn hàng chưa được hủy!", "Lỗi!");</script>';
+}
+
+if (isset($_COOKIE['updateStatusCancelDelivery'])) {
+	echo '<script type="text/javascript">toastr.success("Đơn hàng về chưa đc giao!", "Trở lại!");</script>';
 }
 ?>

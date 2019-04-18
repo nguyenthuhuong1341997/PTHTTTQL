@@ -177,6 +177,9 @@ case 'admin':{
 			case 'confirmComplete':
 				$order->confirmComplete();
 				break;
+			case 'backToOrder':
+				$order->backToOrder();
+				break;
 			case 'cancelDelivery':
 				$order->cancelDelivery();
 				break;
@@ -188,6 +191,18 @@ case 'admin':{
 
 		case 'statistical':{
 				$statistical->index();
+				break;
+			}
+		case 'statistical-staff':{
+				switch ($action) {
+				case '':
+					$statistical->statisticalStaff();
+					break;
+				case 'detail':
+					$statistical->getOrdersByUser();
+					break;
+				}
+
 				break;
 			}
 		case 'top-sale':{

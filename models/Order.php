@@ -131,13 +131,19 @@ class Order {
 	}
 
 	function updateStatusConfirmDelivery($code) {
-		$query = "UPDATE [dbo].[order] SET [dbo].[order].status= 2 WHERE [dbo].[order].code = '" . $code . "'";
+		$query = "UPDATE [dbo].[order] SET [dbo].[order].status = 2 WHERE [dbo].[order].code = '" . $code . "'";
+		$result = sqlsrv_query($this->order_conn, $query);
+		return $result;
+	}
+
+	function updateStatusCancelDelivery($code) {
+		$query = "UPDATE [dbo].[order] SET [dbo].[order].status = 1 WHERE [dbo].[order].code = '" . $code . "'";
 		$result = sqlsrv_query($this->order_conn, $query);
 		return $result;
 	}
 
 	function updateStatusCompleteDelivery($code) {
-		$query = "UPDATE [dbo].[order] SET [dbo].[order].status= 4 WHERE [dbo].[order].code = '" . $code . "'";
+		$query = "UPDATE [dbo].[order] SET [dbo].[order].status = 4, [dbo].[order].created_by = " . $_SESSION['user']['id'] . " WHERE [dbo].[order].code = '" . $code . "'";
 		$result = sqlsrv_query($this->order_conn, $query);
 		return $result;
 	}

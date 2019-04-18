@@ -60,8 +60,10 @@
                   'order': [[ 4, 'desc' ]]
                 });
         $('#order-complete-table').dataTable( {
+            'order': [[ 1, 'desc' ]]
         } );
         $('#order-delivery-table').dataTable({
+            'order': [[ 1, 'desc' ]]
 
         });
     </script>

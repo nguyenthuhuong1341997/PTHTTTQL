@@ -11,11 +11,13 @@ class StatisticalController {
 	var $site_model;
 	var $order_model;
 	var $book_model;
+	var $user_model;
 	function __construct() {
 		$this->book_model = new Book();
 		$this->statistical_model = new Statistical();
 		$this->site_model = new Site();
 		$this->order_model = new Order();
+		$this->user_model = new User();
 	}
 
 	public function index() {
@@ -30,12 +32,21 @@ class StatisticalController {
 		}
 		$revenueSites = $this->statistical_model->revenueSite();
 		$revenueYears = $this->statistical_model->revenueYear($site_id, $year);
-
-		// print_r($revenueYears);
-		// die();
-
 		require_once 'views/admin/statistical/index.php';
 	}
+
+	public function statisticalStaff() {
+		$statistical1 = $this->statistical_model->statisticalStaff();
+		require_once 'views/admin/statistical/statistical-staff.php';
+	}
+
+	public function getOrdersByUser() {
+		$username = $_GET['staff'];
+		$user = $this->user_model->findByUserName($username);
+		$orders = $this->statistical_model->getOrdersByUser($username);
+		require_once 'views/admin/statistical/statistical-staff-detail.php';
+	}
+
 	public function main() {
 		$top_sale = $this->statistical_model->getTopSale();
 		require_once 'views/admin/statistical/main.php';

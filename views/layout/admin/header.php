@@ -99,7 +99,7 @@ if ($_SESSION['user']['rcode'] == 'ROLE_BOSS' || $_SESSION['user']['rcode'] == '
 }
 ?>><a href="?mod=admin&act=order"><i class="fa fa-truck"></i> Quản lý đơn hàng </a></li>
                                     <?php
-if ($_SESSION['user']['rcode'] == 'ROLE_BOSS' || $_SESSION['user']['rcode'] == 'ROLE_ADMIN') {
+if ($_SESSION['user']['rcode'] == 'ROLE_BOSS') {
 	?>
                   <li <?php if (isset($_GET['act'])) {
 		if ($_GET['act'] == 'statistical') {echo 'class="active"';}

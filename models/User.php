@@ -61,6 +61,20 @@ class User {
 		return $result;
 	}
 
+	function findByUserName($username) {
+		$query = "select u.code, u.email, u.name, u.phone, u.username, s.location, r.name as rname from dbo.[user] u inner join dbo.[role] r on u.role_id = r.id
+			inner join dbo.[site] s on s.id = u.site_id where u.username = '" . $username . "'";
+
+		$stmt = sqlsrv_query($this->user_conn, $query);
+		if (!$stmt) {
+			echo "Khong ton tai";
+			die(print_r(sqlsrv_errors(), true));
+		}
+
+		$result = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
+		return $result;
+	}
+
 	function update($data, $id) {
 		$query = "UPDATE [dbo].[user] SET code='" . $data['code'] . "',email='" . $data['email'] . "',name='" . $data['name'] . "',phone='" . $data['phone'] . "',role_id=" . $data['role_id'] . ",site_id=" . $data['site_id'] . ",username='" . $data['username'] . "' WHERE id=" . $id;
 		$stmt = sqlsrv_query($this->user_conn, $query);
